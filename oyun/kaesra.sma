@@ -89,17 +89,6 @@ new const BILINEN_SILAHLAR[][] = {
 #define YETKI_TAM  ADMIN_RCON
 
 new g_api[128]
-/*
- * Sunucu ile web servisi arasındaki paylaşılan anahtar. Her kurulum kendi
- * anahtarını üretir (bkz. KURULUM.md); API'ye yalnız bu anahtarı bilen
- * sunucu veri yazabiliyor.
- *
- * Anahtar 32 bayt, yani 64 haneli onaltılık. Dizi 64 hücre olduğunda son
- * hane EOS'a kurban gidiyor ve API isteği "anahtar taninmiyor" diye
- * reddediyordu — eklenti de kendini kurulum aşamasında sanıp veri
- * göndermiyordu. Payı bilerek geniş.
- */
-new g_anahtar[96]
 new g_gunluk
 new g_sohbetEtiketi
 new g_sohbetKodlama
@@ -294,10 +283,10 @@ public plugin_cfg()
 
     /*
      * ÖLÇÜLDÜ: bu kurulumda plugin_cfg, server.cfg'den ÖNCE çalışıyor.
-     * İlk okumada kaesra_api ve kaesra_anahtar hâlâ create_cvar'ın
-     * varsayılanı oluyor — yani anahtar boş görünüyor ve eklenti kendini
-     * kurulum aşamasında sanıp hiç veri göndermiyor. Ayarlar üç saniye
-     * sonra bir kez daha okunuyor; asıl karar orada veriliyor.
+     * İlk okumada kaesra_api hâlâ create_cvar'ın varsayılanı olabiliyor —
+     * yani ilk sorgular yanlış adrese gidip boş dönebiliyor. Ayarlar üç
+     * saniye sonra bir kez daha okunuyor; adres değiştiyse herkes yeniden
+     * kuyruğa giriyor.
      */
     set_task(3.0, "AyarlariTazele", GOREV_AYAR)
 }
@@ -315,16 +304,6 @@ public AyarlariTazele()
         /* İlk okumadaki yanlış adrese gitmiş sorgular boş dönmüş olabilir. */
         KuyrugaHerkesiKoy()
     }
-
-    if (g_anahtar[0] == EOS) {
-        /*
-         * Kurulum aşaması. Eklenti durdurulmuyor: admin oyun içi komutları
-         * ve MOTD sayfalarını deneyebilsin, yalnız web servisine veri
-         * gönderilmiyor.
-         */
-        server_print("[kaesra] kaesra_anahtar bos. Veri gonderilmeyecek;")
-        server_print("[kaesra] php sunucu/anahtar-uret.php ile bir anahtar uretip kaesra.cfg icine yazin.")
-    }
 }
 
 AyarlariOku()
@@ -332,9 +311,6 @@ AyarlariOku()
     g_api[0] = EOS
     get_pcvar_string(OlusturVeyaBul("kaesra_api", "http://127.0.0.1:8130",
         "Kaesra web servisinin kok adresi, sonunda / olmadan"), g_api, charsmax(g_api))
-
-    get_pcvar_string(OlusturVeyaBul("kaesra_anahtar", "",
-        "Web servisiyle paylasilan anahtar. Bos ise eklenti veri gondermez."), g_anahtar, charsmax(g_anahtar))
 
     g_gunluk = get_pcvar_num(OlusturVeyaBul("kaesra_gunluk", "0", "1 ise her komut konsola yazilir"))
     g_sohbetEtiketi = get_pcvar_num(OlusturVeyaBul("kaesra_sohbet_etiketi", "1",
@@ -916,7 +892,7 @@ SilahIndeksi(const ad[])
  */
 SenkronGonder()
 {
-    if (g_anahtar[0] == EOS || g_ucusta) {
+    if (g_ucusta) {
         return
     }
 
@@ -1164,8 +1140,6 @@ SenkronKaydiIsle(EzJSON:kayit)
 Imzala(EzHttpOptions:secenek)
 {
     new deger[128]
-
-    ezhttp_option_set_header(secenek, "X-Kaesra-Anahtar", g_anahtar)
 
     formatex(deger, charsmax(deger), "%d", get_systime())
     ezhttp_option_set_header(secenek, "X-Kaesra-Zaman", deger)
@@ -1808,7 +1782,6 @@ public KonsolDurum()
 
     server_print("--- Kaesra %s ---", SURUM)
     server_print("  api             : %s", g_api)
-    server_print("  paylasilan anahtar: %s", g_anahtar[0] == EOS ? "AYARLANMAMIS" : "ayarli")
     server_print("  rutbesi yuklu   : %d / %d oyuncu", rutbeli, sayi)
     server_print("  son yenileme    : %s", g_sonYenileme == 0 ? "hic" : "var")
     server_print("  hata sayaci     : %d", g_hataSayaci)
@@ -2244,11 +2217,6 @@ DurumuYaz(id)
     Bilgi(id, "Kaesra ^x04%s^x01 · api ^x04%s^x01", SURUM, g_api)
     Bilgi(id, "Rütbesi yüklü ^x04%d/%d^x01 · hata ^x04%d^x01 · kodlama ^x04%s^x01",
         rutbeli, sayi, g_hataSayaci, KodlamaAdi())
-    if (g_anahtar[0] == EOS) {
-        Bilgi(id, "Paylaşılan anahtar ^x04ayarlanmamış^x01 · veri gönderilmiyor")
-        return
-    }
-
     Bilgi(id, "Oturum ^x04%s^x01 · parti ^x04%d^x01%s",
         g_oturumKimligi, g_parti,
         g_tekrarBekliyor ? " · ^x04bekleyen parti var^x01" : "")

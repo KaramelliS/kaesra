@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # API uclarinin sinamasi. Her satir bir beklenti; sapan kirmizi doner.
 #
-#   ./api-sina.sh                 # anahtari sunucu/veri/anahtar.txt'den okur
-#   ANAHTAR=<64 hane> ./api-sina.sh
+#   ./api-sina.sh                 # varsayilan http://127.0.0.1:8130
+#   KOK=http://sunucun:8130 ./api-sina.sh
 #
 # Neden ayri bir betik: bu kontrolleri elle curl'lemek her degisiklikten
 # sonra on dakika suruyordu ve yanlislikla yalnizca mutlu yolu deniyordum.
@@ -11,29 +11,6 @@
 set -u
 
 KOK="${KOK:-http://127.0.0.1:8130}"
-
-# Anahtar verilmediyse depodan okunur: bu betik her degisiklikten sonra
-# calistiriliyor ve her seferinde 64 hane yapistirmak sinir bozuyor.
-# NOT: $KOK burada TEMEL ADRES, klasor degil — ikisini karistirmamak icin
-# betigin kendi yolu ayri degiskende tutuluyor.
-BETIK_KLASORU="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ANAHTAR="${ANAHTAR:-}"
-if [ -z "$ANAHTAR" ]; then
-    for ADAY in "$BETIK_KLASORU/../sunucu/veri/anahtar.txt" \
-                "$BETIK_KLASORU/veri/anahtar.txt"; do
-        if [ -f "$ADAY" ]; then
-            ANAHTAR="$(tr -d '[:space:]' < "$ADAY")"
-            break
-        fi
-    done
-fi
-
-if [ -z "$ANAHTAR" ]; then
-    echo "Anahtar bulunamadi. Ya ANAHTAR=<64 hane> verin ya da once"
-    echo "  php sunucu/anahtar-uret.php"
-    echo "calistirin (betik sunucu/veri/anahtar.txt dosyasindan okuyor)."
-    exit 2
-fi
 
 gecen=0
 kalan=0
@@ -84,65 +61,62 @@ GECERLI='{"port":27015,"oturum":"sinama1","parti":500,"gecen":60,"harita":"de_du
 
 bekle "GET reddediliyor (405)" 405 -X GET "$KOK/api-senkron.php"
 
-bekle "anahtarsiz istek (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "taninmayan anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: 0000000000000000000000000000000000000000000000000000000000000000"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "bicimi bozuk anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: kisa-ve-onaltilik-degil"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "tekrar basliklari eksik (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "tekrar basliklari eksik (400)" 400 -X POST "$KOK/api-senkron.php"         -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "zaman damgasi kaymis (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $((ZAMAN - 4000))" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "zaman damgasi kaymis (400)" 400 -X POST "$KOK/api-senkron.php"         -H "X-Kaesra-Zaman: $((ZAMAN - 4000))" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "gecersiz port (422)" 422 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d '{"port":99999,"oturum":"sinama1","parti":501,"gecen":60,"oyuncular":[]}'
+bekle "gecersiz port (422)" 422 -X POST "$KOK/api-senkron.php"         -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d '{"port":99999,"oturum":"sinama1","parti":501,"gecen":60,"oyuncular":[]}'
 
 # Nonce tekrari: ayni degerle iki istek. Ikincisi 409 almali.
 TEKRAR=$(nonce)
-bekle "nonce ilk kullanim (200)" 200 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "nonce ilk kullanim (200)" 200 -X POST "$KOK/api-senkron.php"         -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "ayni nonce tekrar (409)" 409 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "ayni nonce tekrar (409)" 409 -X POST "$KOK/api-senkron.php"         -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
 
 
 echo "== senkron ucu =="
 
 gonder() {   # gonder <parti> <govde-json>
     curl -s -o /tmp/kaesra-yanit.json -w '%{http_code}' -X POST "$KOK/api-senkron.php" \
-        -H "X-Kaesra-Anahtar: $ANAHTAR" \
+        \
         -H "X-Kaesra-Zaman: $(date +%s)" -H "X-Kaesra-Tek: $(nonce)" \
         -H 'Content-Type: application/json' -d "$2"
 }
 
 bekle "bozuk JSON (400)" 400 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' -d '{"port":27015,'
 
 bekle "negatif sayac (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":90,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":-3}]}'
 
 bekle "bilinmeyen silah (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":91,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":1,"silahlar":{"lazer_topu":1}}]}'
 
 bekle "akil disi kill (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":92,"gecen":45,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":9999}]}'
 
 bekle "hs > kill (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":93,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":2,"hs":5}]}'
 
 bekle "bozuk kimlik (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    \
     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":94,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"benim adim ahmet","kill":1}]}'

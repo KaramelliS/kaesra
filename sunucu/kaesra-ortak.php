@@ -127,7 +127,14 @@ function oyuncuListesi(): array
     require_once __DIR__ . '/kaesra-depo.php';
     $depo = depoOku();
 
-    if ($depo['oyuncular'] === []) {
+    /*
+     * SIFIR VERİ VARSAYILAN. Depo boşsa sayfalar BOŞ durum gösterir; sahte
+     * veri YALNIZCA yapilandirma.php içinde 'tohumVeri' => '1' yapıldığında
+     * yüklenir (tanıtım görüntüsü çekerken işe yarıyor). Üretimde kapalı:
+     * kurulum gerçekten boş başlar ve ilk gerçek turdan sonra dolmaya
+     * başlar. Boş sayfa bir hata değil, beklenen durumdur.
+     */
+    if ($depo['oyuncular'] === [] && ayar('tohumVeri', '0') === '1') {
         $liste = require __DIR__ . '/veri-tohum.php';
     } else {
         $liste = [];

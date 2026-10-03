@@ -47,7 +47,7 @@ bash test/api-sina.sh
 ```
 senkron: auth gövde doğrulamasından önce çalışıyor
 
-Anahtarı olmayan biri 422 yanıtlarından API şemasını yoklayabiliyordu.
+Kimliği doğrulanmamış biri 422 yanıtlarından API şemasını yoklayabiliyordu.
 ```
 
 Kapsamlar: `oyun`, `senkron`, `motd`, `tema`, `kurulum`, `test`, `docs`.

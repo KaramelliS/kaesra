@@ -7,8 +7,8 @@
 *.asm
 
 # ---- Çalışma zamanı verisi ----
-# depo.json oyuncu istatistikleri (SteamID + nick içerir), anahtar.txt ise
-# paylaşılan sırdır. İkisi de repoya GİRMEMELİ. Klasörün kendisi
+# depo.json oyuncu istatistikleri (SteamID + nick içerir) ve repoya
+# GİRMEMELİ. Klasörün kendisi
 # veri/.gitignore ile korunuyor.
 sunucu/veri/*
 !sunucu/veri/.gitignore

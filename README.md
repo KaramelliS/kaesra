@@ -59,9 +59,11 @@ sürümleri sabitliyor ve kurulum betiği oradan okuyor.
 
 ```bash
 cd sunucu
-php anahtar-uret.php          # 64 haneli paylaşılan anahtarı üretir
 php -S 0.0.0.0:8130           # veya Apache/nginx, bkz. KURULUM.md
 ```
+
+Kurulumda **anahtar, jeton veya token yok.** Web servisi kalktığı anda
+hazır; eklenti ona doğrudan yazar.
 
 ### 2. Oyun sunucusu
 
@@ -74,19 +76,7 @@ Betik yedi paketi resmî kaynaklarından indirir, doğru sırayla kurar,
 `kaesra.sma`'yı derler, `plugins.ini` / `modules.ini` / `server.cfg`
 satırlarını ekler. Linux için bkz. `KURULUM.md`.
 
-### 3. Anahtarı iki tarafa yazın
-
-`php anahtar-uret.php` çıktısını şuraya da yazın:
-
-```
-cstrike/addons/amxmodx/configs/kaesra.cfg
-  kaesra_anahtar "1193f4ae...41ad84"
-```
-
-İkisi birebir aynı olmazsa API her isteği **401** ile çevirir ve eklenti
-sessizce veri göndermez.
-
-### 4. Doğrulayın
+### 3. Doğrulayın
 
 Sunucuyu başlatın, konsolda:
 
@@ -94,9 +84,13 @@ Sunucuyu başlatın, konsolda:
 kaesra_durum
 ```
 
-`paylasilan anahtar: ayarli` satırını görmelisiniz. Oyun içinde `/top`
-yazınca sıralama sayfası açılmalı — depo boşken tohum veri gösteriliyor,
-yani kurulumdan hemen sonra sayfa dolu görünüyor.
+`api : http://...` satırını görmelisiniz.
+
+**Kurulum sıfır veriyle başlar ve bu beklenen durumdur:** depo boşken
+sayfalar boş durum gösterir ("Henüz kimse yok"), bot gerekmez. İlk gerçek
+tur bittiğinde sıralama dolmaya başlar. Tanıtım görüntüsü çekmek için
+sahte veri isterseniz `sunucu/yapilandirma.php` içinde `'tohumVeri' => '1'`
+yapın, sonra geri kapatın.
 
 **Detaylı kurulum, tuzaklar ve sorun giderme:** [`KURULUM.md`](KURULUM.md)
 
@@ -176,7 +170,6 @@ Kendi temanızı yapmak: [`sunucu/tema/README.md`](sunucu/tema/README.md)
 | Cvar | Varsayılan | Açıklama |
 |---|---|---|
 | `kaesra_api` | `http://127.0.0.1:8130` | web servisi kök adresi, sonda `/` olmadan |
-| `kaesra_anahtar` | *(boş)* | paylaşılan anahtar; boşsa veri gönderilmez |
 | `kaesra_gunluk` | `0` | 1 ise her komut ve parti gövdesi konsola yazılır |
 | `kaesra_sohbet_etiketi` | `1` | sohbette oyuncu adının önünde rütbe |
 | `kaesra_sohbet_kodlama` | `0` | 0 UTF-8 · 1 CP1254 (eski istemci) · 2 ASCII |

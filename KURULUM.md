@@ -27,11 +27,13 @@ geliyor ve bu kurulumda çalışmıyor.
 
 ```bash
 cd sunucu
-php anahtar-uret.php
+php -S 127.0.0.1:8130
 ```
 
-Çıktıyı bir yere yazın — adım 3'te gerekecek. Betik anahtarı
-`sunucu/veri/anahtar.txt` dosyasına `0600` izinleriyle koyuyor.
+Kurulumda **anahtar, jeton veya token yok.** Servis kalktığı anda hazır.
+Bunun bilinçli bir tasarım kararı olduğunu ve dışarıya açık kurulumlarda
+ne yapmanız gerektiğini aşağıda "Uç noktasını korumak" başlığında
+okuyun.
 
 ### Geliştirme için
 
@@ -52,7 +54,7 @@ DocumentRoot /var/www/kaesra/sunucu
     Require all granted
 </Directory>
 
-# veri/ klasörüne dışarıdan erişim ENGELLENMELİ — içinde anahtar.txt var.
+# veri/ klasörüne dışarıdan erişim ENGELLENMELİ — oyuncu istatistikleri var.
 <Directory /var/www/kaesra/sunucu/veri>
     Require all denied
 </Directory>
@@ -70,9 +72,9 @@ location ~ \.php$ {
 }
 ```
 
-> **`veri/` klasörünü web'den kapatmak zorunlu.** İçinde paylaşılan anahtar
-> ve tüm oyuncu istatistikleri duruyor. nginx/Apache yapılandırmasında
-> `deny all` satırını atlamak, anahtarı dünyaya açmak demek.
+> **`veri/` klasörünü web'den kapatmak zorunlu.** İçinde tüm oyuncu
+> istatistikleri (SteamID + nick) duruyor. nginx/Apache yapılandırmasında
+> `deny all` satırını atlamak, oyuncu verinizi dünyaya açmak demek.
 
 ---
 
@@ -147,25 +149,46 @@ echo kaesra.amxx >> ../configs/plugins.ini
 
 ---
 
-## 3. Anahtarı iki tarafa yazın
+## 3. Doğrulayın
 
-`php anahtar-uret.php` çıktısını şuraya da yazın:
-
-```
-cstrike/addons/amxmodx/configs/kaesra.cfg
-  kaesra_anahtar "<64 haneli değer>"
-```
-
-Sonra haritayı yenileyin (`changelevel de_dust2`) ve konsolda:
+Sunucuyu başlatın ve konsolda:
 
 ```
 kaesra_durum
 ```
 
-`paylasilan anahtar: ayarli` görmelisiniz.
+`api : http://...` satırını görmelisiniz. Oyun içinde `/top` yazınca
+sıralama açılır — **kurulum sıfır veriyle başlar**, yani ilk tur
+bitene kadar sayfalar boş durum gösterir ("Henüz kimse yok"). Bu bir
+hata değil, beklenen durumdur; bot gerekmez.
 
-> Anahtarı yenilemek: `php anahtar-uret.php --zorla` — sonra `kaesra.cfg`'yi
-> de güncellemeyi unutmayın, yoksa API 401 döner.
+Tanıtım görüntüsü için sahte veri isterseniz:
+`sunucu/yapilandirma.php` → `'tohumVeri' => '1'`, işiniz bitince `'0'`.
+
+### Uç noktasını korumak
+
+API'de paylaşılan anahtar **yok**: bu servis açık kaynak ve her kurulum
+kendi backend'ini çalıştırıyor, yani API'ye yazan taraf sizin kendi oyun
+sunucunuz. Uygulama katmanında bunun yerine **tekrar koruması** var
+(nonce + 300 sn zaman penceresi) — yakalanmış bir istek yeniden
+oynatılamaz.
+
+Kurulumunuz dışarıya açıksa ve oyun sunucunuz **dışındaki** kaynakların
+yazmasını engellemek istiyorsanız bunu web sunucusunda yapın:
+
+```nginx
+# yalnız oyun sunucunuzun IP'si yazabilsin
+location = /api-senkron.php {
+    allow 203.0.113.7;      # oyun sunucunuz
+    deny all;
+    include fastcgi_params;
+    fastcgi_pass unix:/run/php/php-fpm.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+}
+```
+
+MOTD sayfaları (`*-motd.php`) ve `api-oyuncu.php` yalnız **okur**; bunlar
+herkese açık kalmalı, yoksa oyuncular sıralamayı göremez.
 
 ---
 
@@ -234,26 +257,10 @@ pid'ini ve kendi dll'ini yazıyor).
 
 ## Sorun giderme
 
-### API her isteği 401 ile çeviriyor
-
-İki taraf farklı anahtara bakıyor. Kontrol:
-
-```bash
-cat sunucu/veri/anahtar.txt
-grep kaesra_anahtar cstrike/addons/amxmodx/configs/kaesra.cfg
-```
-
-İkisi **birebir** aynı olmalı. Baştaki/sondaki boşluk en sık sebep —
-`hash_equals` karşılaştırması kırpma yapmıyor.
-
-### 503 `Anahtar uretilmemis`
-
-`php anahtar-uret.php` çalıştırılmamış. Dosya `sunucu/veri/anahtar.txt`.
-
 ### 400 `Zaman damgasi pencere disinda`
 
-Oyun sunucusunun saati 300 saniyeden fazla kaymış. `kaesra_anahtar` doğru
-bile olsa istek reddedilir. NTP'yi düzeltin.
+Oyun sunucusunun saati 300 saniyeden fazla kaymış ve istek reddediliyor.
+NTP'yi düzeltin. Bu koruma tekrar saldırısına karşı; kapatılmaz.
 
 ### 422 `Alanlar gecersiz` — `bilinmeyen_silah`
 
@@ -304,6 +311,6 @@ done
 bash test/api-sina.sh
 ```
 
-`test/api-sina.sh` mutlu yolu **ve** hata dallarını sınar: yanlış anahtar
-401, kaymış saat 400, tekrarlanan nonce 409, bilinmeyen silah 422,
-`isabet > atis` kırpması.
+`test/api-sina.sh` mutlu yolu **ve** hata dallarını sınar: kaymış saat
+400, tekrarlanan nonce 409, bilinmeyen silah 422, `isabet > atis`
+ kırpması, idempotency.

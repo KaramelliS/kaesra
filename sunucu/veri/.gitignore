@@ -1,4 +1,4 @@
 # Calisma zamani verisi — repoya girmez.
-# depo.json oyuncu istatistikleri, anahtar.txt ise paylasilan sirdir.
+# depo.json oyuncu istatistikleri (SteamID + nick) icerir; repoya girmez.
 *
 !.gitignore

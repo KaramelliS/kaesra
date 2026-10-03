@@ -75,7 +75,8 @@ AmxxEasyHttp ile toplama; PHP tarafında KP hesabı ve MOTD sunumu.
 ## Bu sürümle değişenler
 
 - Satış/lisans katmanı kaldırıldı. Yerine kurulum-başına **paylaşılan
-  anahtar** (`X-Kaesra-Anahtar`) + nonce ve 300 sn zaman penceresi.
+  anahtar/token YOK; bunun yerine nonce + 300 sn zaman penceresi ile
+  tekrar koruması var.
   Kimlik doğrulaması artık gövde doğrulamasından **önce** çalışıyor.
 - Valorant/Riot Games varlıkları kaldırıldı (telif). Eski ekran
   görüntüleri de bu yüzden yayınlanmadı.

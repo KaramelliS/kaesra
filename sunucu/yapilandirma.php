@@ -36,4 +36,9 @@ return [
        sözlüğünü boşaltın (dosyanın yedeğini almayı unutmayın).
        Otomatik sezon sıfırlama yol haritasında. */
     'sezon'       => 'Sezon 1',
+
+    /* Sahte (tohum) veri yüklensin mi? VARSAYILAN KAPALI: kurulum sıfır
+       veriyle başlar ve sayfalar boş durum gösterir. Yalnızca tanıtım
+       görüntüsü çekerken '1' yapın, sonra geri kapatın. */
+    'tohumVeri'   => '0',
 ];

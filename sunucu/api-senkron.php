@@ -5,7 +5,7 @@ declare(strict_types=1);
  * İstatistik alımı. Eklenti tur sonunda ham sayaç DELTASI gönderiyor.
  *
  *   POST /api-senkron.php
- *   X-Kaesra-Anahtar: <paylasilan anahtar>
+ *   (kimlik basligi YOK — bkz. asagida "sunucu anahtari" notu)
  *   X-Kaesra-Zaman / X-Kaesra-Tek
  *   {
  *     "port": 27015, "oturum": "a1b2c3d4", "parti": 7,
@@ -64,22 +64,22 @@ $govde = govdeyiCoz();
 $port = (int) ($govde['port'] ?? 0);
 
 /*
- * KİMLİK ÖNCE, DOĞRULAMA SONRA.
+ * Sunucu anahtarı: isteğin geldiği IP + gövdedeki port.
  *
- * Gövde doğrulaması kimlikten önce çalışırsa anahtarı olmayan biri hangi
- * alanın hangi kurala takıldığını 422 yanıtlarından tek tek okuyup API'nin
- * şemasını ve sınırlarını ücretsiz keşfedebiliyor. Önce anahtar soruluyor;
- * anahtar yoksa alanlara hiç bakılmıyor.
+ * Bilerek paylaşılan bir anahtar / token YOK. Bu servis açık kaynak ve
+ * HER KURULUM KENDİ BACKEND'İNİ çalıştırıyor: API'ye yazan taraf, depoya
+ * sahip olan tarafın kendi oyun sunucusu. Başkasının sunucusuna veri
+ * yazmak isteyen zaten o sunucuya erişmiş demek — anahtar ek bir şey
+ * korumuyor, yalnızca kurulumu iki dosya arasında değer taşımaya
+ * zorluyordu ve unutulduğunda sessizce veri kaybettiriyordu.
  *
- * port burada erken okunuyor çünkü anahtar kontrolü sunucu anahtarını
- * (ip:port) ondan kuruyor — ama yalnız OKUNUYOR, doğrulanmıyor. Geçersiz
- * port değerinin 422'si anahtar kontrolünden sonra geliyor.
- *
- * Yan faydası: anahtar reddedilince depo kilidi hiç alınmamış oluyor. Eskiden
- * red depoAc()'den sonra geldiği için sorun() süreci sonlandırıyor ve kilit
- * ancak süreç ölünce bırakılıyordu — o arada gelen istekler bekliyordu.
+ * Kimlik doğrulaması yerine TEKRAR koruması var: nonce + 300 sn zaman
+ * penceresi (bkz. tekrariEngelle). Yakalanmış bir istek yeniden
+ * oynatılamıyor. Kurulumunuz dışarıya açıksa ve istemediğiniz yazarları
+ * engellemek istiyorsanız bunu web sunucusu katmanında yapın (IP kısıtı
+ * veya basic auth), uygulama katmanında değil — bkz. KURULUM.md.
  */
-$sunucuAnahtari = anahtarDogrula($port);
+$sunucuAnahtari = ($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0') . ':' . $port;
 
 /* ---------------- gövde doğrulama ---------------- */
 

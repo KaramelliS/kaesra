@@ -24,12 +24,6 @@ const AZAMI_OYUNCU = 40;
 const AZAMI_GOVDE = 262144;   // 256 KiB
 
 /**
- * Paylaşılan anahtarın durduğu dosya. Depoya (depo.json) bilerek konmadı:
- * depo yedeklenirken, taşınırken veya birine gösterilirken anahtar sızmaz.
- */
-const ANAHTAR_DOSYA = __DIR__ . '/veri/anahtar.txt';
-
-/**
  * RFC 9457 `type` alanının kökü. Hata tiplerini belgeleyen bir sayfanız
  * varsa buraya onun adresini yazın; yoksa bu haliyle de geçerli — `type`
  * alanının çözülebilir olması şart değil, tanımlayıcı olması yeterli.
@@ -89,78 +83,6 @@ function yontemDayat(string $beklenen): void
         $beklenen,
         preg_replace('/[^A-Z]/', '', $gelen) ?: '?'
     ));
-}
-
-/**
- * Paylaşılan anahtar ile kimlik doğrulama.
- *
- * Bu bir ÜRÜN ANAHTARI DEĞİL. Satış/lisans sistemi bu sürümde yok; anahtar
- * yalnızca "bu web servisine hangi oyun sunucusu yazabilir" sorusunun
- * cevabı. Her kurulum kendi anahtarını `anahtar-uret.php` ile üretir ve
- * aynı değeri iki tarafa yazar:
- *
- *   sunucu/veri/anahtar.txt                  ← web tarafı
- *   cstrike/addons/amxmodx/configs/kaesra.cfg ← kaesra_anahtar
- *
- * Anahtar bilerek depoda (depo.json) değil ayrı dosyada duruyor: depo
- * yedeklenirken veya birine gösterilirken anahtar sızmaz.
- *
- * 401 "anahtarı bilmiyorsun", 503 "sunucu tarafı daha kurulmamış".
- * Karşılaştırma hash_equals ile, yani sabit zamanlı — yanıt süresi ölçülerek
- * anahtar harf harf tahmin edilemesin diye.
- *
- * @return string "ip:port" biçiminde sunucu anahtarı
- */
-function anahtarDogrula(int $port): string
-{
-    if (!is_file(ANAHTAR_DOSYA)) {
-        header('Retry-After: 60');
-        sorun(503, 'Anahtar uretilmemis', sprintf(
-            'Sunucu tarafi henuz kurulmamis: %s dosyasi yok. "php anahtar-uret.php" '
-            . 'calistirin; uretilen degeri hem bu dosyaya hem oyun sunucusundaki '
-            . 'kaesra_anahtar cvar degerine yazin.',
-            basename(ANAHTAR_DOSYA)
-        ));
-    }
-
-    $beklenen = strtolower(trim((string) file_get_contents(ANAHTAR_DOSYA)));
-
-    if (!preg_match('/^[0-9a-f]{64}$/', $beklenen)) {
-        sorun(503, 'Anahtar dosyasi bozuk', sprintf(
-            '%s icinde 64 haneli onaltilik bir anahtar olmali; bulunan %d karakter '
-            . 've bicime uymuyor. Dosyayi silip "php anahtar-uret.php" ile yeniden '
-            . 'uretin.',
-            basename(ANAHTAR_DOSYA), strlen($beklenen)
-        ));
-    }
-
-    $gelen = strtolower(trim((string) ($_SERVER['HTTP_X_KAESRA_ANAHTAR'] ?? '')));
-
-    if ($gelen === '') {
-        header('WWW-Authenticate: X-Kaesra-Anahtar realm="kaesra"');
-        sorun(401, 'Anahtar yok', 'X-Kaesra-Anahtar basligi gerekiyor. Oyun '
-            . 'sunucusunda kaesra_anahtar cvar degerine yazilir; eklenti her istekte bu '
-            . 'basligi kendisi ekler. Ornek: "X-Kaesra-Anahtar: 3f2a...9c1d" '
-            . '(64 hane onaltilik).');
-    }
-
-    if (!hash_equals($beklenen, $gelen)) {
-        header('WWW-Authenticate: X-Kaesra-Anahtar realm="kaesra", error="invalid_key"');
-        sorun(401, 'Anahtar taninmiyor', sprintf(
-            'Gonderilen anahtar (%s) sunucudakiyle eslesmiyor. Iki tarafi da ayni '
-            . 'degerle guncelleyin: sunucu/veri/anahtar.txt ve kaesra.cfg icindeki '
-            . 'kaesra_anahtar. Basinda veya sonunda bosluk kalmadigindan emin olun.',
-            jetonKirp($gelen)
-        ));
-    }
-
-    /*
-     * IP gövdeden DEĞİL REMOTE_ADDR'dan okunuyor: sunucu kendi adresini
-     * uyduramasın. Port gövdeden geliyor çünkü sunucu dış portunu başka
-     * türlü bilemez; yalnız parti anahtarını (idempotency) ayırmakta
-     * kullanılıyor, bir yetki kararı değil.
-     */
-    return ($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0') . ':' . $port;
 }
 
 /**
