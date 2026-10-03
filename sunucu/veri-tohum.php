@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Ayrıntı: docs/TOHUM.md
  */
 
-$SICIL_OYUNCULAR = [
+$KAESRA_OYUNCULAR = [
     [
         'ad' => 'kaptan', 'kimlik' => 'STEAM_1:0:589119623',
         'ajan' => null, 'ulke' => 'tr',
@@ -207,6 +207,6 @@ $SICIL_OYUNCULAR = [
  * yanlış yere eklemek tabloyu sessizce bozuyor. Gerçek sorgu da ORDER BY
  * kp DESC olacak, o yüzden burada da aynı garanti veriliyor.
  */
-usort($SICIL_OYUNCULAR, static fn(array $a, array $b): int => $b['kp'] <=> $a['kp']);
+usort($KAESRA_OYUNCULAR, static fn(array $a, array $b): int => $b['kp'] <=> $a['kp']);
 
-return $SICIL_OYUNCULAR;
+return $KAESRA_OYUNCULAR;

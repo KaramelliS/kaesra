@@ -56,14 +56,14 @@ nonce() {
 bekle() {
     local aciklama="$1" beklenen="$2"; shift 2
     local kod
-    kod=$(curl -s -o /tmp/sicil-yanit.json -w '%{http_code}' "$@")
+    kod=$(curl -s -o /tmp/kaesra-yanit.json -w '%{http_code}' "$@")
 
     if [ "$kod" = "$beklenen" ]; then
         printf '  \033[32mTAMAM\033[0m %-3s %s\n' "$kod" "$aciklama"
         gecen=$((gecen + 1))
     else
         printf '  \033[31mSAPMA\033[0m %-3s (beklenen %s) %s\n' "$kod" "$beklenen" "$aciklama"
-        head -c 220 /tmp/sicil-yanit.json 2>/dev/null | sed 's/^/        /'
+        head -c 220 /tmp/kaesra-yanit.json 2>/dev/null | sed 's/^/        /'
         echo
         kalan=$((kalan + 1))
     fi
@@ -84,66 +84,66 @@ GECERLI='{"port":27015,"oturum":"sinama1","parti":500,"gecen":60,"harita":"de_du
 
 bekle "GET reddediliyor (405)" 405 -X GET "$KOK/api-senkron.php"
 
-bekle "anahtarsiz istek (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "anahtarsiz istek (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "taninmayan anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: 0000000000000000000000000000000000000000000000000000000000000000"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "taninmayan anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: 0000000000000000000000000000000000000000000000000000000000000000"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "bicimi bozuk anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: kisa-ve-onaltilik-degil"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "bicimi bozuk anahtar (401)" 401 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: kisa-ve-onaltilik-degil"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "tekrar basliklari eksik (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: $ANAHTAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "tekrar basliklari eksik (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "zaman damgasi kaymis (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: $ANAHTAR"     -H "X-Sicil-Zaman: $((ZAMAN - 4000))" -H "X-Sicil-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "zaman damgasi kaymis (400)" 400 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $((ZAMAN - 4000))" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "gecersiz port (422)" 422 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: $ANAHTAR"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)"     -H 'Content-Type: application/json' -d '{"port":99999,"oturum":"sinama1","parti":501,"gecen":60,"oyuncular":[]}'
+bekle "gecersiz port (422)" 422 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)"     -H 'Content-Type: application/json' -d '{"port":99999,"oturum":"sinama1","parti":501,"gecen":60,"oyuncular":[]}'
 
 # Nonce tekrari: ayni degerle iki istek. Ikincisi 409 almali.
 TEKRAR=$(nonce)
-bekle "nonce ilk kullanim (200)" 200 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: $ANAHTAR"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "nonce ilk kullanim (200)" 200 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
 
-bekle "ayni nonce tekrar (409)" 409 -X POST "$KOK/api-senkron.php"     -H "X-Sicil-Anahtar: $ANAHTAR"     -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
+bekle "ayni nonce tekrar (409)" 409 -X POST "$KOK/api-senkron.php"     -H "X-Kaesra-Anahtar: $ANAHTAR"     -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $TEKRAR"     -H 'Content-Type: application/json' -d "$GECERLI"
 
 
 echo "== senkron ucu =="
 
 gonder() {   # gonder <parti> <govde-json>
-    curl -s -o /tmp/sicil-yanit.json -w '%{http_code}' -X POST "$KOK/api-senkron.php" \
-        -H "X-Sicil-Anahtar: $ANAHTAR" \
-        -H "X-Sicil-Zaman: $(date +%s)" -H "X-Sicil-Tek: $(nonce)" \
+    curl -s -o /tmp/kaesra-yanit.json -w '%{http_code}' -X POST "$KOK/api-senkron.php" \
+        -H "X-Kaesra-Anahtar: $ANAHTAR" \
+        -H "X-Kaesra-Zaman: $(date +%s)" -H "X-Kaesra-Tek: $(nonce)" \
         -H 'Content-Type: application/json' -d "$2"
 }
 
 bekle "bozuk JSON (400)" 400 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' -d '{"port":27015,'
 
 bekle "negatif sayac (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":90,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":-3}]}'
 
 bekle "bilinmeyen silah (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":91,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":1,"silahlar":{"lazer_topu":1}}]}'
 
 bekle "akil disi kill (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":92,"gecen":45,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":9999}]}'
 
 bekle "hs > kill (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":93,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"STEAM_0:1:11","kill":2,"hs":5}]}'
 
 bekle "bozuk kimlik (422)" 422 -X POST "$KOK/api-senkron.php" \
-    -H "X-Sicil-Anahtar: $ANAHTAR" \
-    -H "X-Sicil-Zaman: $ZAMAN" -H "X-Sicil-Tek: $(nonce)" \
+    -H "X-Kaesra-Anahtar: $ANAHTAR" \
+    -H "X-Kaesra-Zaman: $ZAMAN" -H "X-Kaesra-Tek: $(nonce)" \
     -H 'Content-Type: application/json' \
     -d '{"port":27015,"oturum":"sinama1","parti":94,"gecen":60,"harita":"de_dust2","oyuncular":[{"kimlik":"benim adim ahmet","kill":1}]}'
 
@@ -160,16 +160,16 @@ PARTI='{"port":27015,"oturum":"sinama1","parti":1,"gecen":120,"harita":"de_dust2
 kod=$(gonder 1 "$PARTI")
 if [ "$kod" = "200" ]; then
     printf '  \033[32mTAMAM\033[0m 200 gecerli parti islendi\n'; gecen=$((gecen + 1))
-    cat /tmp/sicil-yanit.json | sed 's/^/        /' | head -c 400; echo
+    cat /tmp/kaesra-yanit.json | sed 's/^/        /' | head -c 400; echo
 else
-    printf '  \033[31mSAPMA\033[0m %s gecerli parti\n' "$kod"; head -c 300 /tmp/sicil-yanit.json; kalan=$((kalan + 1))
+    printf '  \033[31mSAPMA\033[0m %s gecerli parti\n' "$kod"; head -c 300 /tmp/kaesra-yanit.json; kalan=$((kalan + 1))
 fi
 
 kod=$(gonder 1 "$PARTI")
-if [ "$kod" = "200" ] && grep -q "zaten_islendi" /tmp/sicil-yanit.json; then
+if [ "$kod" = "200" ] && grep -q "zaten_islendi" /tmp/kaesra-yanit.json; then
     printf '  \033[32mTAMAM\033[0m 200 ayni parti ikinci kez -> zaten_islendi (idempotent)\n'; gecen=$((gecen + 1))
 else
-    printf '  \033[31mSAPMA\033[0m %s idempotency calismadi\n' "$kod"; head -c 300 /tmp/sicil-yanit.json; kalan=$((kalan + 1))
+    printf '  \033[31mSAPMA\033[0m %s idempotency calismadi\n' "$kod"; head -c 300 /tmp/kaesra-yanit.json; kalan=$((kalan + 1))
 fi
 
 echo

@@ -13,7 +13,7 @@ declare(strict_types=1);
  * boyutunda kullanılıyor, hiç ölçeklenmiyor. Sayfa toplamı ~600 KB.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -79,18 +79,18 @@ $enCokAdi = $haritalar === [] ? '—' : (string) array_key_first($haritalar);
 
 .serit .ad {
   position:absolute; left:16px; top:11px;
-  font-family:'Sicil Display',sans-serif; font-size:22px; line-height:1;
+  font-family:'Kaesra Display',sans-serif; font-size:22px; line-height:1;
   text-transform:uppercase; color:#ECE8E1;
 }
 .serit .adGolge {
   position:absolute; left:16px; top:11px;
-  font-family:'Sicil Display',sans-serif; font-size:22px; line-height:1;
+  font-family:'Kaesra Display',sans-serif; font-size:22px; line-height:1;
   text-transform:uppercase; color:#0B1219;
 }
 .serit .pay { position:absolute; left:17px; top:38px; color:#C6CED4; font-size:11px; }
 
 .serit .orta { position:absolute; left:320px; top:11px; }
-.serit .orta .sure { font-family:'Sicil Display',sans-serif; font-size:21px; line-height:1; }
+.serit .orta .sure { font-family:'Kaesra Display',sans-serif; font-size:21px; line-height:1; }
 .serit .orta .kim { color:#5E7080; font-size:11px; margin-top:3px; }
 
 /* Üç satır 64 piksele sığmıyordu; sürenin ayrı satırı kesiliyordu. Süre
@@ -113,7 +113,7 @@ $enCokAdi = $haritalar === [] ? '—' : (string) array_key_first($haritalar);
 <body style="background:#0B1219;color:#ECE8E1">
 
 <div class="gezinme" style="display:flex;justify-content:space-between;padding:9px 26px;background:#0E161F;border-bottom:1px solid rgba(236,232,225,.10)">
-  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Sicil Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
+  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Kaesra Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
   <span class="etiket">Harita sıralaması</span>
 </div>
 

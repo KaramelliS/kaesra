@@ -1,5 +1,5 @@
 /*
- * Sicil'in görsel dili. İki MOTD sayfası da bunu kullanıyor.
+ * Kaesra'in görsel dili. İki MOTD sayfası da bunu kullanıyor.
  *
  * ÖNEMLİ — bu dosya bilerek eski usul yazıldı.
  *
@@ -22,12 +22,12 @@
  * aynı, oyuncu rengi görüp rütbeyi okumadan tanıyor.
  */
 
-@font-face { font-family:'Sicil Display'; src:url('font/Anton-Regular.ttf') format('truetype'); font-weight:400; }
-@font-face { font-family:'Sicil Dar'; src:url('font/BarlowCondensed-SemiBold.ttf') format('truetype'); font-weight:600; }
-@font-face { font-family:'Sicil Dar'; src:url('font/BarlowCondensed-Medium.ttf') format('truetype'); font-weight:500; }
-@font-face { font-family:'Sicil UI'; src:url('font/Barlow-Regular.ttf') format('truetype'); font-weight:400; }
-@font-face { font-family:'Sicil UI'; src:url('font/Barlow-Medium.ttf') format('truetype'); font-weight:500; }
-@font-face { font-family:'Sicil UI'; src:url('font/Barlow-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Kaesra Display'; src:url('font/Anton-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Kaesra Dar'; src:url('font/BarlowCondensed-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Kaesra Dar'; src:url('font/BarlowCondensed-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Kaesra UI'; src:url('font/Barlow-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Kaesra UI'; src:url('font/Barlow-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Kaesra UI'; src:url('font/Barlow-SemiBold.ttf') format('truetype'); font-weight:600; }
 
 * { box-sizing:border-box; }
 
@@ -35,11 +35,11 @@ html, body { background:#0B1219; }
 
 body {
   margin:0; color:#ECE8E1;
-  font-family:'Sicil UI','Segoe UI',Tahoma,sans-serif; font-size:15px; line-height:1.45;
+  font-family:'Kaesra UI','Segoe UI',Tahoma,sans-serif; font-size:15px; line-height:1.45;
 }
 
 .etiket {
-  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:#5E7080;
 }
 
@@ -72,14 +72,14 @@ body {
 .tepe .ic { position:relative; display:flex; align-items:flex-end; justify-content:space-between; }
 
 .marka {
-  margin:0; font-family:'Sicil Display',sans-serif; font-weight:400;
+  margin:0; font-family:'Kaesra Display',sans-serif; font-weight:400;
   font-size:40px; line-height:.86; letter-spacing:.06em; text-transform:uppercase; color:#ECE8E1;
 }
 .marka b { color:#FF4655; font-weight:400; }
 .marka + .etiket { display:block; margin-top:5px; font-size:11px; letter-spacing:.18em; }
 
 .tepe .sag { text-align:right; }
-.tepe .sag .n { font-family:'Sicil Display',sans-serif; font-size:22px; line-height:1; color:#ECE8E1; }
+.tepe .sag .n { font-family:'Kaesra Display',sans-serif; font-size:22px; line-height:1; color:#ECE8E1; }
 
 /* Açılı pah: clip-path yok, köşeye 45 derece döndürülmüş bir kare oturtuluyor.
    Karenin rengi sayfa zemini olduğu için köşe kesilmiş görünüyor. */
@@ -92,7 +92,7 @@ body {
 /* ---------------- Tablo ---------------- */
 table { width:100%; border-collapse:collapse; }
 thead th {
-  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#5E7080;
   text-align:left; padding:7px 9px 6px; border-bottom:1px solid rgba(236,232,225,.10);
 }
@@ -100,8 +100,8 @@ thead th.sag, tbody td.sag { text-align:right; }
 tbody td { padding:2px 9px; border-bottom:1px solid rgba(236,232,225,.05); vertical-align:middle; }
 tbody tr:hover td { background:rgba(236,232,225,.045); }
 
-.sira { width:30px; font-family:'Sicil Display',sans-serif; font-size:16px; color:#3F5061; }
-.kademeAd { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:14px; letter-spacing:.10em; text-transform:uppercase; }
+.sira { width:30px; font-family:'Kaesra Display',sans-serif; font-size:16px; color:#3F5061; }
+.kademeAd { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:14px; letter-spacing:.10em; text-transform:uppercase; }
 .kucuk { color:#93A2AE; }
 .oyuncuAd { font-weight:500; color:#ECE8E1; }
 
@@ -119,7 +119,7 @@ tbody tr:hover td { background:rgba(236,232,225,.045); }
  * koymanın IE11'de temiz bir yolu yok.
  */
 .kpHucre {
-  font-family:'Sicil Display',sans-serif; font-size:18px; line-height:1;
+  font-family:'Kaesra Display',sans-serif; font-size:18px; line-height:1;
   color:#ECE8E1; padding-top:4px !important; padding-bottom:3px !important;
 }
 .kpHucre .cubuk {

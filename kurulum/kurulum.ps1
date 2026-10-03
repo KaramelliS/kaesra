@@ -1,7 +1,7 @@
-﻿<#
+﻿﻿<#
 .SYNOPSIS
-    Sicil için CS 1.6 sunucusu kurar: motor, metamod, AMX Mod X, ReAPI,
-    EasyHttp, sonra Sicil'in kendisi.
+    Kaesra için CS 1.6 sunucusu kurar: motor, metamod, AMX Mod X, ReAPI,
+    EasyHttp, sonra Kaesra'in kendisi.
 
 .DESCRIPTION
     Beş bileşen birbirine bağlı ve kurulum sırası önemli. Bu betik sırayı
@@ -214,7 +214,7 @@ Yaz ''
 # --- 2) motor: ReHLDS + ReGameDLL ---------------------------------------
 Yaz '[2/6] Motor kuruluyor (ReHLDS + ReGameDLL)' 'adim'
 
-$g = Ac $Paket['rehlds'][0] (Join-Path $env:TEMP "sicil-rehlds-$PID")
+$g = Ac $Paket['rehlds'][0] (Join-Path $env:TEMP "kaesra-rehlds-$PID")
 
 # TUZAK 1: hlds.exe KOPYALANMIYOR. Yalnız swds.dll.
 $swds = IlkBul $g 'swds.dll'
@@ -223,7 +223,7 @@ Copy-Item $swds (Join-Path $Valve 'swds.dll') -Force
 Kaydet "swds.dll -> valve\  (hlds.exe BILEREK kopyalanmadi: SDL3.dll assertion)"
 Yaz "  swds.dll kopyalandı (hlds.exe bilerek atlandı)" 'tamam'
 
-$gd = Ac $Paket['regamedll'][0] (Join-Path $env:TEMP "sicil-regamedll-$PID")
+$gd = Ac $Paket['regamedll'][0] (Join-Path $env:TEMP "kaesra-regamedll-$PID")
 foreach ($h in @('mp.dll','cs.dll')) {
     $bul = IlkBul $gd $h
     if ($bul) {
@@ -240,7 +240,7 @@ Yaz ''
 
 # --- 3) Metamod-R + liblist.gam -----------------------------------------
 Yaz '[3/6] Metamod-R kuruluyor' 'adim'
-$mm = Ac $Paket['metamod'][0] (Join-Path $env:TEMP "sicil-metamod-$PID")
+$mm = Ac $Paket['metamod'][0] (Join-Path $env:TEMP "kaesra-metamod-$PID")
 $mmDll = IlkBul $mm 'metamod.dll'
 if (-not $mmDll) { Dur "Metamod-R paketinde metamod.dll bulunamadı" }
 $mmHedef = Join-Path $Hedef 'addons\metamod'
@@ -256,9 +256,9 @@ if ($yeni -eq $icerik) {
     $yeni = $icerik.TrimEnd() + "`r`ngamedll `"addons\metamod\metamod.dll`"`r`n"
 }
 if ($yeni -ne $icerik) {
-    Copy-Item $liblist "$liblist.sicil-yedek" -Force
+    Copy-Item $liblist "$liblist.kaesra-yedek" -Force
     Set-Content -Path $liblist -Value $yeni -NoNewline -Encoding ASCII
-    Kaydet "liblist.gam gamedll -> metamod (yedek: liblist.gam.sicil-yedek)"
+    Kaydet "liblist.gam gamedll -> metamod (yedek: liblist.gam.kaesra-yedek)"
     Yaz "  liblist.gam: gamedll -> addons\metamod\metamod.dll" 'tamam'
 } else {
     Yaz "  liblist.gam zaten metamod'a bakıyor" 'tamam'
@@ -269,7 +269,7 @@ Yaz ''
 # --- 4) AMX Mod X + ReAPI + EasyHttp ------------------------------------
 Yaz '[4/6] AMX Mod X, ReAPI ve EasyHttp kuruluyor' 'adim'
 foreach ($p in $Paket['amxmodx']) {
-    $d = Ac $p (Join-Path $env:TEMP "sicil-amxx-$([guid]::NewGuid().ToString('N').Substring(0,8))")
+    $d = Ac $p (Join-Path $env:TEMP "kaesra-amxx-$([guid]::NewGuid().ToString('N').Substring(0,8))")
     $addons = Join-Path $d 'addons'
     if (Test-Path $addons) {
         Copy-Item "$addons\*" $Valve -Recurse -Force
@@ -279,7 +279,7 @@ foreach ($p in $Paket['amxmodx']) {
     }
 }
 foreach ($k in @('reapi','easyhttp')) {
-    $d = Ac $Paket[$k][0] (Join-Path $env:TEMP "sicil-$k-$PID")
+    $d = Ac $Paket[$k][0] (Join-Path $env:TEMP "kaesra-$k-$PID")
     $addons = Join-Path $d 'addons'
     if (Test-Path $addons) {
         Copy-Item "$addons\*" $Valve -Recurse -Force
@@ -291,8 +291,8 @@ foreach ($k in @('reapi','easyhttp')) {
 }
 Yaz ''
 
-# --- 5) Sicil ------------------------------------------------------------
-Yaz '[5/6] Sicil kuruluyor' 'adim'
+# --- 5) Kaesra ------------------------------------------------------------
+Yaz '[5/6] Kaesra kuruluyor' 'adim'
 $amxx = Join-Path $Valve 'addons\amxmodx'
 if (-not (Test-Path $amxx)) { Dur "AMX Mod X kurulamadı: $amxx yok" }
 
@@ -304,51 +304,51 @@ foreach ($d in @($plugins,$configs,$scripting)) {
 }
 
 # 5a) kaynak + derleme
-$smaKaynak = Join-Path $ProjeKok 'oyun\sicil.sma'
-if (-not (Test-Path $smaKaynak)) { Dur "sicil.sma bulunamadı: $smaKaynak" }
-Copy-Item $smaKaynak (Join-Path $scripting 'sicil.sma') -Force
-Kaydet 'sicil.sma -> scripting\'
+$smaKaynak = Join-Path $ProjeKok 'oyun\kaesra.sma'
+if (-not (Test-Path $smaKaynak)) { Dur "kaesra.sma bulunamadı: $smaKaynak" }
+Copy-Item $smaKaynak (Join-Path $scripting 'kaesra.sma') -Force
+Kaydet 'kaesra.sma -> scripting\'
 
 $derleyici = Join-Path $scripting 'amxxpc.exe'
 if (Test-Path $derleyici) {
     Push-Location $scripting
     try {
-        $cikti = & $derleyici 'sicil.sma' "-o$plugins\sicil.amxx" 2>&1
+        $cikti = & $derleyici 'kaesra.sma' "-o$plugins\kaesra.amxx" 2>&1
         if ($LASTEXITCODE -ne 0) {
             Yaz ($cikti -join "`n") 'hata'
-            Dur 'sicil.sma derlenemedi — yukarıdaki hataya bakın'
+            Dur 'kaesra.sma derlenemedi — yukarıdaki hataya bakın'
         }
         $uyari = ($cikti | Select-String -Pattern 'warning' -SimpleMatch).Count
         $ek = if ($uyari -gt 0) { ", $uyari uyarı" } else { "" }
-        Kaydet "sicil.amxx derlendi$ek"
-        Yaz "  sicil.amxx derlendi$ek" 'tamam'
+        Kaydet "kaesra.amxx derlendi$ek"
+        Yaz "  kaesra.amxx derlendi$ek" 'tamam'
     } finally { Pop-Location }
 } else {
     Yaz "  amxxpc.exe yok, derleme atlandı — hazır .amxx kullanılıyor" 'uyari'
-    $hazir = Join-Path $ProjeKok 'oyun\sicil.amxx'
-    if (Test-Path $hazir) { Copy-Item $hazir (Join-Path $plugins 'sicil.amxx') -Force }
+    $hazir = Join-Path $ProjeKok 'oyun\kaesra.amxx'
+    if (Test-Path $hazir) { Copy-Item $hazir (Join-Path $plugins 'kaesra.amxx') -Force }
 }
 
-# 5b) sicil.cfg
-$cfgKaynak = Join-Path $ProjeKok 'oyun\sicil.cfg'
-$cfgHedef  = Join-Path $configs 'sicil.cfg'
+# 5b) kaesra.cfg
+$cfgKaynak = Join-Path $ProjeKok 'oyun\kaesra.cfg'
+$cfgHedef  = Join-Path $configs 'kaesra.cfg'
 if (Test-Path $cfgHedef) {
-    Yaz "  sicil.cfg zaten var, ÜSTÜNE YAZILMADI (ayarlarınız korunuyor)" 'uyari'
+    Yaz "  kaesra.cfg zaten var, ÜSTÜNE YAZILMADI (ayarlarınız korunuyor)" 'uyari'
 } else {
     Copy-Item $cfgKaynak $cfgHedef -Force
-    Kaydet 'sicil.cfg -> configs\'
-    Yaz "  sicil.cfg kuruldu" 'tamam'
+    Kaydet 'kaesra.cfg -> configs\'
+    Yaz "  kaesra.cfg kuruldu" 'tamam'
 }
 
-# 5c) plugins.ini — sicil.amxx satırı
+# 5c) plugins.ini — kaesra.amxx satırı
 $pluginsIni = Join-Path $configs 'plugins.ini'
 $metin = if (Test-Path $pluginsIni) { Get-Content $pluginsIni } else { @() }
-if (-not ($metin -match '^\s*sicil\.amxx\s*$')) {
-    Add-Content -Path $pluginsIni -Value 'sicil.amxx' -Encoding ASCII
-    Kaydet 'plugins.ini += sicil.amxx'
-    Yaz "  plugins.ini: sicil.amxx eklendi" 'tamam'
+if (-not ($metin -match '^\s*kaesra\.amxx\s*$')) {
+    Add-Content -Path $pluginsIni -Value 'kaesra.amxx' -Encoding ASCII
+    Kaydet 'plugins.ini += kaesra.amxx'
+    Yaz "  plugins.ini: kaesra.amxx eklendi" 'tamam'
 } else {
-    Yaz "  plugins.ini: sicil.amxx zaten kayıtlı" 'tamam'
+    Yaz "  plugins.ini: kaesra.amxx zaten kayıtlı" 'tamam'
 }
 
 # 5d) modules.ini — reapi + easy_http açık olmalı
@@ -370,12 +370,12 @@ foreach ($m in @('reapi','easy_http')) {
 
 # 5e) server.cfg sonuna exec satırı
 $serverCfg = Join-Path $Hedef 'server.cfg'
-$execSatir = 'exec addons/amxmodx/configs/sicil.cfg'
+$execSatir = 'exec addons/amxmodx/configs/kaesra.cfg'
 $sc = if (Test-Path $serverCfg) { Get-Content $serverCfg } else { @() }
 if (-not ($sc -match [regex]::Escape($execSatir))) {
-    Add-Content -Path $serverCfg -Value "`r`n// Sicil ayarlari (kurulum betigi ekledi)" -Encoding ASCII
+    Add-Content -Path $serverCfg -Value "`r`n// Kaesra ayarlari (kurulum betigi ekledi)" -Encoding ASCII
     Add-Content -Path $serverCfg -Value $execSatir -Encoding ASCII
-    Kaydet 'server.cfg += exec sicil.cfg'
+    Kaydet 'server.cfg += exec kaesra.cfg'
     Yaz "  server.cfg: exec satırı eklendi" 'tamam'
 } else {
     Yaz "  server.cfg: exec satırı zaten var" 'tamam'
@@ -420,12 +420,12 @@ Yaz ''
 Yaz 'SIRADAKİ ADIMLAR' 'adim'
 Yaz '  1. Web servisini kurun ve bir anahtar üretin:'
 Yaz '       cd sunucu; php anahtar-uret.php'
-Yaz '  2. Çıkan 64 haneli değeri cstrike\addons\amxmodx\configs\sicil.cfg'
-Yaz '     içindeki sicil_anahtar alanına yazın.'
+Yaz '  2. Çıkan 64 haneli değeri cstrike\addons\amxmodx\configs\kaesra.cfg'
+Yaz '     içindeki kaesra_anahtar alanına yazın.'
 Yaz '  3. Sunucuyu başlatın:'
 Yaz '       hlds.exe -console -game cstrike -insecure -port 27015 +maxplayers 16 +map de_dust2'
 Yaz '  4. Konsolda doğrulayın:'
-Yaz '       sicil_durum'
+Yaz '       kaesra_durum'
 Yaz '     "paylasilan anahtar: ayarli" satırını görmelisiniz.'
 Yaz ''
 Yaz '  TUZAK 5 — sıra önemli: ÖNCE sunucuyu, SONRA istemciyi açın.' 'uyari'

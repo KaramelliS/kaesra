@@ -1,7 +1,7 @@
-# Sicil
+# Kaesra
 
 **Counter-Strike 1.6 için rank ve istatistik sistemi.** Oyuncu öldürür,
-asist yapar, bomba kurar, tur kazanır; Sicil bunları toplar, sunucu
+asist yapar, bomba kurar, tur kazanır; Kaesra bunları toplar, sunucu
 tarafında puana çevirir ve oyun içinde MOTD sayfaları olarak gösterir.
 
 ReAPI hook zincirleri + AmxxEasyHttp ile çalışır, `csstats` modülüne
@@ -16,7 +16,7 @@ Oyun içi komutlar GoldSrc'in MOTD penceresinde HTML sayfa açıyor. Altı sayfa
 
 | Komut | Sayfa | İçerik |
 |---|---|---|
-| `/rank`, `/sicil` | profil | rütbe, KP, K/D, isabet, silah ve harita kırılımı |
+| `/rank`, `/kaesra` | profil | rütbe, KP, K/D, isabet, silah ve harita kırılımı |
 | `/top`, `/siralama` | sıralama | sunucunun en iyileri, arama kutusu, sayfalama |
 | `/rutbeler`, `/merdiven` | merdiven | 25 kademe, eşikler, bir üste kaç KP kaldığı |
 | `/silahlar` | silahlar | silah başına kill, en çok kullanılan |
@@ -71,7 +71,7 @@ cd kurulum
 ```
 
 Betik yedi paketi resmî kaynaklarından indirir, doğru sırayla kurar,
-`sicil.sma`'yı derler, `plugins.ini` / `modules.ini` / `server.cfg`
+`kaesra.sma`'yı derler, `plugins.ini` / `modules.ini` / `server.cfg`
 satırlarını ekler. Linux için bkz. `KURULUM.md`.
 
 ### 3. Anahtarı iki tarafa yazın
@@ -79,8 +79,8 @@ satırlarını ekler. Linux için bkz. `KURULUM.md`.
 `php anahtar-uret.php` çıktısını şuraya da yazın:
 
 ```
-cstrike/addons/amxmodx/configs/sicil.cfg
-  sicil_anahtar "1193f4ae...41ad84"
+cstrike/addons/amxmodx/configs/kaesra.cfg
+  kaesra_anahtar "1193f4ae...41ad84"
 ```
 
 İkisi birebir aynı olmazsa API her isteği **401** ile çevirir ve eklenti
@@ -91,7 +91,7 @@ sessizce veri göndermez.
 Sunucuyu başlatın, konsolda:
 
 ```
-sicil_durum
+kaesra_durum
 ```
 
 `paylasilan anahtar: ayarli` satırını görmelisiniz. Oyun içinde `/top`
@@ -105,12 +105,12 @@ yani kurulumdan hemen sonra sayfa dolu görünüyor.
 ## Mimari
 
 ```
-oyun/sicil.sma        eklenti — toplar ve gösterir, HESAPLAMAZ
+oyun/kaesra.sma        eklenti — toplar ve gösterir, HESAPLAMAZ
 sunucu/api-senkron.php   delta partilerini alır, KP'yi hesaplar, rütbeyi döner
 sunucu/api-oyuncu.php    bağlantı anında rütbe özetini verir
 sunucu/*-motd.php        altı MOTD sayfası
-sunucu/sicil-ortak.php   tema, rütbe merdiveni, KP formülü
-sunucu/sicil-depo.php    JSON depo (flock ile), MySQL'e geçiş noktası
+sunucu/kaesra-ortak.php   tema, rütbe merdiveni, KP formülü
+sunucu/kaesra-depo.php    JSON depo (flock ile), MySQL'e geçiş noktası
 sunucu/tema/klasik/      görsel kimlik — kataloğun kendisi
 ```
 
@@ -118,7 +118,7 @@ sunucu/tema/klasik/      görsel kimlik — kataloğun kendisi
 
 Bu projenin imzası. Eklenti yalnız **ham sayaç** gönderiyor (`kill`, `hs`,
 `asist`, `hasar`, `atis`, `isabet`, `kurma`, `cozme`, `mvp`, ...); puan
-değeri tek bir yerde, `sicil-ortak.php → kazanilanPuan()` içinde duruyor.
+değeri tek bir yerde, `kaesra-ortak.php → kazanilanPuan()` içinde duruyor.
 Üç sonucu var:
 
 - `.sma`'yı düzenleyerek rütbe şişirilemiyor
@@ -153,7 +153,7 @@ bulunmuş GoldSrc davranışları. En önemlileri:
    çözümlemeyi hata sanıyor.
 6. `amxxpc` kaynaktaki UTF-8 baytlarını olduğu gibi bırakıyor. Sohbet tek
    baytlık çizildiği için çıkışta çevriliyor; bkz. `SohbetKodla` ve
-   `sicil_sohbet_kodlama`.
+   `kaesra_sohbet_kodlama`.
 
 ---
 
@@ -171,20 +171,20 @@ Kendi temanızı yapmak: [`sunucu/tema/README.md`](sunucu/tema/README.md)
 
 ## Ayarlar
 
-`cstrike/addons/amxmodx/configs/sicil.cfg`:
+`cstrike/addons/amxmodx/configs/kaesra.cfg`:
 
 | Cvar | Varsayılan | Açıklama |
 |---|---|---|
-| `sicil_api` | `http://127.0.0.1:8130` | web servisi kök adresi, sonda `/` olmadan |
-| `sicil_anahtar` | *(boş)* | paylaşılan anahtar; boşsa veri gönderilmez |
-| `sicil_gunluk` | `0` | 1 ise her komut ve parti gövdesi konsola yazılır |
-| `sicil_sohbet_etiketi` | `1` | sohbette oyuncu adının önünde rütbe |
-| `sicil_sohbet_kodlama` | `0` | 0 UTF-8 · 1 CP1254 (eski istemci) · 2 ASCII |
-| `sicil_botlari_say` | `0` | bot istatistiği tutulsun mu (yalnız test) |
-| `sicil_uzatma` | `1` | beraberlikte maç uzasın mı |
+| `kaesra_api` | `http://127.0.0.1:8130` | web servisi kök adresi, sonda `/` olmadan |
+| `kaesra_anahtar` | *(boş)* | paylaşılan anahtar; boşsa veri gönderilmez |
+| `kaesra_gunluk` | `0` | 1 ise her komut ve parti gövdesi konsola yazılır |
+| `kaesra_sohbet_etiketi` | `1` | sohbette oyuncu adının önünde rütbe |
+| `kaesra_sohbet_kodlama` | `0` | 0 UTF-8 · 1 CP1254 (eski istemci) · 2 ASCII |
+| `kaesra_botlari_say` | `0` | bot istatistiği tutulsun mu (yalnız test) |
+| `kaesra_uzatma` | `1` | beraberlikte maç uzasın mı |
 
-Sunucu komutları (rcon): `sicil_durum`, `sicil_yenile`,
-`sicil_goster <ad> <komut>`, `sicil_istemci <ad> <komut>`.
+Sunucu komutları (rcon): `kaesra_durum`, `kaesra_yenile`,
+`kaesra_goster <ad> <komut>`, `kaesra_istemci <ad> <komut>`.
 
 ---
 
@@ -194,7 +194,7 @@ Dürüst liste — bunlar gizlenmiş değil:
 
 - **Depo tek bir JSON dosyası.** `flock` ile doğru çalışıyor ama her yazımda
   dosyanın tamamı yeniden yazılıyor. ~30 sunucu üstünde tıkanır. MySQL şeması
-  `sicil-depo.php` başında belgelendi; geçişte yalnız o dosyanın gövdesi
+  `kaesra-depo.php` başında belgelendi; geçişte yalnız o dosyanın gövdesi
   değişecek, API uçlarına dokunulmayacak.
 - **Sıralama indekssiz.** Her çağrıda tüm oyuncular geziliyor. 16 oyuncuda
   bedava, 20.000'de değil.
@@ -215,7 +215,7 @@ Dürüst liste — bunlar gizlenmiş değil:
 | | |
 |---|---|
 | ✅ **Serbest** | Kullanmak, değiştirmek, paylaşmak. **Para kazanan bir sunucuda çalıştırmak da serbest** — VIP/admin satan sunucu dahil. |
-| ❌ **Yasak** | Satmak, ücretli pakete koymak, kendi eserin gibi göstermek, atıfı silmek, "Sicil" adını/logosunu kullanmak. |
+| ❌ **Yasak** | Satmak, ücretli pakete koymak, kendi eserin gibi göstermek, atıfı silmek, "Kaesra" adını/logosunu kullanmak. |
 | 🔁 **ShareAlike** | Türevler de aynı lisansla yayınlanmak zorunda. |
 
 Ayrıntı, atıf biçimi ve marka koşulları: **[`NOTICE`](NOTICE)**
@@ -245,7 +245,7 @@ yazın; sonraki kişi aynı bir saati harcamasın.
 
 ## Yol haritası
 
-- [ ] MySQL deposu (`sicil-depo.php` sözleşmesi zaten buna göre)
+- [ ] MySQL deposu (`kaesra-depo.php` sözleşmesi zaten buna göre)
 - [ ] Sezon sıfırlama ve arşiv
 - [ ] `geoip` ile gerçek ülke bayrağı
 - [ ] Linux kurulum betiği (`kurulum.sh`)

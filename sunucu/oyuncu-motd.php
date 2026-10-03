@@ -12,11 +12,11 @@ declare(strict_types=1);
  * nasıl (silah ve harita kırılımı), sonra ayrıntı. Oyuncu önce rozetine,
  * sonra kill sayısına, en son hangi silahla iyi olduğuna bakıyor.
  *
- * sicil-tema.css'teki yasak listesi burada da geçerli: var(), clip-path,
+ * kaesra-tema.css'teki yasak listesi burada da geçerli: var(), clip-path,
  * mask-image, object-fit, grid, gap yok — motor IE11 sınıfı.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -47,7 +47,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
   display:flex; justify-content:space-between; align-items:center;
   padding:6px 22px; background:#0E161F; border-bottom:1px solid rgba(236,232,225,.10);
 }
-.gezinme a { color:#93A2AE; text-decoration:none; font-family:'Sicil Dar',sans-serif;
+.gezinme a { color:#93A2AE; text-decoration:none; font-family:'Kaesra Dar',sans-serif;
              font-weight:600; font-size:13px; letter-spacing:.18em; text-transform:uppercase; }
 .gezinme a:hover { color:#FF4655; }
 .gezinme .ortada { color:#5E7080; }
@@ -64,7 +64,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 }
 .kimlikBlok .ic { position:relative; padding:11px 22px 10px 152px; display:flex; justify-content:space-between; align-items:flex-start; }
 
-.buyukIsim { font-family:'Sicil Display',sans-serif; font-weight:400; font-size:28px; line-height:.96;
+.buyukIsim { font-family:'Kaesra Display',sans-serif; font-weight:400; font-size:28px; line-height:.96;
              margin:2px 0 0; text-transform:uppercase; color:#ECE8E1; }
 .kimlikNo { color:#5E7080; font-size:11px; margin-top:4px; letter-spacing:.04em; }
 .kimlikNo img.bayrak { width:18px; height:12px; vertical-align:-2px; margin-right:6px;
@@ -77,9 +77,9 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .rutbeBlok { text-align:right; white-space:nowrap; }
 .rutbeBlok img { width:58px; height:58px; vertical-align:middle; margin-left:13px; }
 .rutbeBlok .yazi { display:inline-block; vertical-align:middle; text-align:right; }
-.rutbeBlok .ad { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:15px;
+.rutbeBlok .ad { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:15px;
                  letter-spacing:.20em; text-transform:uppercase; }
-.rutbeBlok .kp { font-family:'Sicil Display',sans-serif; font-size:28px; line-height:1; color:#FF4655; margin-top:1px; }
+.rutbeBlok .kp { font-family:'Kaesra Display',sans-serif; font-size:28px; line-height:1; color:#FF4655; margin-top:1px; }
 .rutbeBlok .rr { width:140px; height:3px; background:rgba(236,232,225,.12); margin-top:6px; margin-left:auto; }
 .rutbeBlok .rr i { display:block; height:3px; background:#FF4655; }
 .rutbeBlok .kalan { color:#6E7F8C; font-size:11px; margin-top:4px; }
@@ -87,7 +87,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .buyukler { display:flex; border-bottom:1px solid rgba(236,232,225,.10); }
 .buyukler > div { flex:1; padding:7px 18px; border-right:1px solid rgba(236,232,225,.05); }
 .buyukler > div:last-child { border-right:0; }
-.buyukler .n { font-family:'Sicil Display',sans-serif; font-size:21px; line-height:1.06; margin-top:2px; color:#ECE8E1; }
+.buyukler .n { font-family:'Kaesra Display',sans-serif; font-size:21px; line-height:1.06; margin-top:2px; color:#ECE8E1; }
 .buyukler .n.vurgu { color:#FF4655; }
 
 .ikili { display:flex; }
@@ -95,7 +95,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .ikili > section:first-child { border-right:1px solid rgba(236,232,225,.08); }
 /* Tek bolum gosterilirken ayrac gereksiz. */
 .ikili.tekli > section { border-right:0; }
-.bolumBasi { margin:0 0 8px; font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:14px;
+.bolumBasi { margin:0 0 8px; font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:14px;
              letter-spacing:.22em; text-transform:uppercase; color:#93A2AE; }
 
 .satir { padding:3px 0; border-bottom:1px solid rgba(236,232,225,.05); }
@@ -104,9 +104,9 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .satir .sol { color:#ECE8E1; }
 .satir .sol img.silahIkon { width:58px; height:20px; vertical-align:middle; margin-right:9px; }
 .satir .sol img.haritaIkon { width:40px; height:22px; vertical-align:middle; margin-right:9px; }
-.satir .ham { color:#4F6376; font-family:'Sicil Dar',sans-serif; font-weight:600;
+.satir .ham { color:#4F6376; font-family:'Kaesra Dar',sans-serif; font-weight:600;
               font-size:11px; letter-spacing:.14em; text-transform:uppercase; margin-left:8px; }
-.satir .deger { font-family:'Sicil Display',sans-serif; font-size:19px; color:#ECE8E1; }
+.satir .deger { font-family:'Kaesra Display',sans-serif; font-size:19px; color:#ECE8E1; }
 .cizgi { height:3px; background:rgba(236,232,225,.08); margin-top:5px; }
 .cizgi i { display:block; height:3px; background:#FF4655; }
 .cizgi.mavi i { background:#4FC9D6; }
@@ -115,7 +115,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
    div ve yuksekligi yuzde. Motor IE11 sinifi, cizim API'si guvenilmez. */
 .grafik { padding:11px 22px 13px; border-bottom:1px solid rgba(236,232,225,.10); }
 .grafikBasi { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px; }
-.grafikBasi .anahtar span { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:11px;
+.grafikBasi .anahtar span { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:11px;
                             letter-spacing:.16em; text-transform:uppercase; color:#5E7080; margin-left:18px; }
 .grafikBasi .anahtar i { display:inline-block; width:11px; height:11px; vertical-align:-1px; margin-right:6px; }
 
@@ -132,18 +132,18 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .sutun .cubuk.ort { right:4%; background:#33454F; }
 
 .sutun .rakam { position:absolute; bottom:100%; left:4%; margin-bottom:5px;
-                font-family:'Sicil Display',sans-serif; font-size:17px; color:#ECE8E1; white-space:nowrap; }
+                font-family:'Kaesra Display',sans-serif; font-size:17px; color:#ECE8E1; white-space:nowrap; }
 .sutun .oran { position:absolute; bottom:8px; right:4%;
-               font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:11px;
+               font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:11px;
                letter-spacing:.10em; color:#5E7080; }
 .sutun .adAlt { position:absolute; bottom:0; left:0; right:0;
-                font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:12px;
+                font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:12px;
                 letter-spacing:.16em; text-transform:uppercase; color:#93A2AE; }
 
 .ek { display:flex; flex-wrap:wrap; border-top:1px solid rgba(236,232,225,.10); }
 .ek > div { width:25%; padding:7px 22px; border-right:1px solid rgba(236,232,225,.05);
             border-bottom:1px solid rgba(236,232,225,.05); }
-.ek .v { font-family:'Sicil Display',sans-serif; font-size:17px; margin-top:1px; color:#ECE8E1; }
+.ek .v { font-family:'Kaesra Display',sans-serif; font-size:17px; margin-top:1px; color:#ECE8E1; }
 
 .bolumSerit {
   display:flex; padding:6px 22px; background:#0E161F;
@@ -151,7 +151,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 }
 .bolumSerit a, .bolumSerit b {
   margin-right:6px; padding:5px 14px; text-decoration:none;
-  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:12px; letter-spacing:.14em; text-transform:uppercase;
 }
 .bolumSerit a { color:#93A2AE; border:1px solid rgba(236,232,225,.14); }
@@ -164,7 +164,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 
 /* --- mac gecmisi --- */
 .macBasi { display:flex; justify-content:space-between; align-items:baseline; padding:10px 22px 2px; }
-.macBasi .karne { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:12px;
+.macBasi .karne { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:12px;
                   letter-spacing:.14em; text-transform:uppercase; color:#93A2AE; }
 .macBasi .karne b { color:#ECE8E1; }
 
@@ -176,16 +176,16 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .mac .yer { width:190px; white-space:nowrap; }
 .mac .yer .h { display:inline; color:#ECE8E1; font-weight:500; }
 .mac .yer .t { display:inline; color:#5E7080; font-size:11px; margin-left:8px; }
-.mac .rozet { width:92px; text-align:center; font-family:'Sicil Dar',sans-serif; font-weight:600;
+.mac .rozet { width:92px; text-align:center; font-family:'Kaesra Dar',sans-serif; font-weight:600;
               font-size:10px; letter-spacing:.12em; padding:2px 0; }
 .mac .rozet.g { background:rgba(107,219,139,.13); color:#6BDB8B; }
 .mac .rozet.m { background:rgba(255,70,85,.13); color:#FF4655; }
 .mac .rozet.b { background:rgba(236,232,225,.08); color:#93A2AE; }
-.mac .skor { width:100px; text-align:center; font-family:'Sicil Display',sans-serif; font-size:15px; }
-.mac .skor s { color:#4F6376; font-size:12px; text-decoration:none; font-family:'Sicil Dar',sans-serif; }
+.mac .skor { width:100px; text-align:center; font-family:'Kaesra Display',sans-serif; font-size:15px; }
+.mac .skor s { color:#4F6376; font-size:12px; text-decoration:none; font-family:'Kaesra Dar',sans-serif; }
 .mac .kda { flex:1; text-align:center; color:#93A2AE; }
 .mac .kda b { color:#ECE8E1; font-weight:600; }
-.mac .fark { width:90px; text-align:right; font-family:'Sicil Display',sans-serif; font-size:14px; }
+.mac .fark { width:90px; text-align:right; font-family:'Kaesra Display',sans-serif; font-size:14px; }
 .mac .fark.arti { color:#6BDB8B; }
 .mac .fark.eksi { color:#FF4655; }
 .mac .fark.sifir { color:#5E7080; }
@@ -196,8 +196,8 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 .ozet > div { flex:1; padding:9px 18px 10px; border-right:1px solid rgba(236,232,225,.05); }
 .ozet > div:last-child { border-right:0; }
 .ozet .genis { flex:1.35; }
-.ozet .v { font-family:'Sicil Display',sans-serif; font-size:20px; line-height:1.1; margin-top:3px; color:#ECE8E1; white-space:nowrap; }
-.ozet .alt { font-family:'Sicil Dar',sans-serif; font-weight:500; font-size:12px; letter-spacing:.08em; color:#6E7F8C; margin-left:6px; }
+.ozet .v { font-family:'Kaesra Display',sans-serif; font-size:20px; line-height:1.1; margin-top:3px; color:#ECE8E1; white-space:nowrap; }
+.ozet .alt { font-family:'Kaesra Dar',sans-serif; font-weight:500; font-size:12px; letter-spacing:.08em; color:#6E7F8C; margin-left:6px; }
 .ozet .kOran { height:3px; background:rgba(236,232,225,.10); margin-top:6px; }
 .ozet .kOran i { display:block; height:3px; }
 .ozet .ozetSilah { width:52px; height:18px; vertical-align:middle; margin-right:8px; }
@@ -223,7 +223,7 @@ $sonraki = $oyuncu !== null && $sira < count($oyuncular) ? $oyuncular[$sira] : n
 <?php if ($oyuncu === null): ?>
   <div class="yok">
     <span class="etiket">Kayıt yok</span>
-    <h1 class="buyukIsim">Bu kimlik sicilde değil</h1>
+    <h1 class="buyukIsim">Bu kimlik kaesrade değil</h1>
     <p style="color:#6E7F8C;max-width:620px">
       Aranan kimlik <b style="color:#ECE8E1"><?= esc($istenen) ?></b>. Sunucuya hiç bağlanmamış bir
       hesap olabilir ya da yazımda hata var. Oyun içinde <b style="color:#ECE8E1">status</b> yazarak
@@ -349,7 +349,7 @@ $bolumAdres = static fn(string $b): string =>
 
   <div class="ic">
     <div>
-      <span class="etiket"><?= esc(ayar('marka', 'Sicil')) ?><span class="tik"><i></i><i class="b"></i><i class="c"></i></span><?= esc(ayar('sezon', 'Sezon 1')) ?></span>
+      <span class="etiket"><?= esc(ayar('marka', 'Kaesra')) ?><span class="tik"><i></i><i class="b"></i><i class="c"></i></span><?= esc(ayar('sezon', 'Sezon 1')) ?></span>
       <h1 class="buyukIsim"><?= esc($oyuncu['ad']) ?></h1>
       <div class="kimlikNo">
         <?php $bayrak = bayrak($oyuncu['ulke'] ?? null); ?>
@@ -584,7 +584,7 @@ $bolumAdres = static fn(string $b): string =>
       <?php if ($ilkKademe !== null): ?>
         <span style="color:<?= esc($ilkKademe['renk']) ?>"><?= esc($ilkKademe['ad']) ?></span>
       <?php else: ?>&mdash;<?php endif; ?>
-      <span style="color:#5E7080;font-family:'Sicil Dar',sans-serif;font-size:12px"><?= esc($oyuncu['ilk']) ?></span>
+      <span style="color:#5E7080;font-family:'Kaesra Dar',sans-serif;font-size:12px"><?= esc($oyuncu['ilk']) ?></span>
     </div>
   </div>
 </div>

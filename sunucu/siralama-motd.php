@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * Sıralama — MOTD içinde açılan ana ekran.
  *
- * Görsel dil sicil-tema.css'te; buradaki CSS yalnız bu sayfaya özgü olan.
+ * Görsel dil kaesra-tema.css'te; buradaki CSS yalnız bu sayfaya özgü olan.
  * O dosyanın başındaki uyarı burada da geçerli: var(), clip-path, mask-image,
  * object-fit, grid ve gap YASAK — motor IE11 sınıfı.
  *
@@ -14,7 +14,7 @@ declare(strict_types=1);
  * yokluğundaydı.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -110,19 +110,19 @@ function baglanti(int $sayfa, string $ara): string
   width:170px; padding:5px 9px;
   background:#0B1219; color:#ECE8E1;
   border:1px solid rgba(236,232,225,.16);
-  font-family:'Sicil Govde',sans-serif; font-size:13px;
+  font-family:'Kaesra Govde',sans-serif; font-size:13px;
 }
 .araDugme {
   margin-left:6px; padding:6px 14px;
   background:#FF4655; color:#0B1219; border:0; cursor:pointer;
-  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:12px; letter-spacing:.16em;
 }
 
 .bolumler { flex:1; margin-left:22px; }
 .bolumler a {
   color:#93A2AE; text-decoration:none; margin-right:18px;
-  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:12px; letter-spacing:.14em; text-transform:uppercase;
 }
 .bolumler a:hover { color:#FF4655; }
@@ -132,7 +132,7 @@ function baglanti(int $sayfa, string $ara): string
    zorlastiriyor. */
 .sayfalar a, .sayfalar b {
   display:inline-block; min-width:26px; padding:4px 6px; margin-left:4px;
-  font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:12px;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:12px;
   text-align:center; text-decoration:none;
 }
 .sayfalar a { color:#93A2AE; border:1px solid rgba(236,232,225,.14); }
@@ -144,7 +144,7 @@ function baglanti(int $sayfa, string $ara): string
   border-bottom:1px solid rgba(236,232,225,.10);
 }
 .sonucSerit .baslikSonuc {
-  font-family:'Sicil Display',sans-serif; font-size:19px;
+  font-family:'Kaesra Display',sans-serif; font-size:19px;
   text-transform:uppercase; margin-top:3px; color:#ECE8E1;
 }
 .sonucSerit .baslikSonuc b { color:#FF4655; font-weight:400; }
@@ -181,11 +181,11 @@ function baglanti(int $sayfa, string $ara): string
 .sampiyon .rozet { width:64px; height:64px; display:block; margin-right:16px; }
 .sampiyon .kim { flex:1; min-width:0; }
 .sampiyon .isim {
-  font-family:'Sicil Display',sans-serif; font-weight:400; font-size:26px; line-height:.98;
+  font-family:'Kaesra Display',sans-serif; font-weight:400; font-size:26px; line-height:.98;
   margin:3px 0 0; text-transform:uppercase; color:#ECE8E1;
 }
 .sampiyon .kademe {
-  font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:13px;
+  font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:13px;
   letter-spacing:.16em; text-transform:uppercase; margin-top:3px;
 }
 .sampiyon .fark { color:#93A2AE; font-size:12px; margin-top:4px; }
@@ -195,7 +195,7 @@ function baglanti(int $sayfa, string $ara): string
 
 .sampiyon .puan { text-align:right; margin-left:20px; }
 .sampiyon .puan .n {
-  font-family:'Sicil Display',sans-serif; font-weight:400; font-size:42px; line-height:.85; color:#FF4655;
+  font-family:'Kaesra Display',sans-serif; font-weight:400; font-size:42px; line-height:.85; color:#FF4655;
 }
 .sampiyon .puan .rr { width:150px; height:3px; background:rgba(236,232,225,.12); margin-top:8px; }
 .sampiyon .puan .rr i { display:block; height:3px; background:#FF4655; }
@@ -203,7 +203,7 @@ function baglanti(int $sayfa, string $ara): string
 .kunye { display:flex; border-bottom:1px solid rgba(236,232,225,.10); background:rgba(236,232,225,.018); }
 .kunye > div { flex:1; padding:11px 26px; border-right:1px solid rgba(236,232,225,.05); }
 .kunye > div:last-child { border-right:0; }
-.kunye .v { font-family:'Sicil Display',sans-serif; font-size:26px; line-height:1.15; margin-top:3px; color:#ECE8E1; }
+.kunye .v { font-family:'Kaesra Display',sans-serif; font-size:26px; line-height:1.15; margin-top:3px; color:#ECE8E1; }
 .kunye .v img { width:70px; height:24px; vertical-align:middle; margin-right:10px; }
 
 /* Satırın tamamı tıklanabilir olamıyor (<a> bir <tr>'yi saramaz), o yüzden
@@ -227,7 +227,7 @@ tbody tr:hover td { cursor:pointer; }
     <div>
       <?php /* markaHtml kaçışsız: stil için etiket taşıyor ve
              yapilandirma.php site sahibinin kendi dosyası. */ ?>
-      <h1 class="marka"><?= ayar('markaHtml', 'Sicil') ?></h1>
+      <h1 class="marka"><?= ayar('markaHtml', 'Kaesra') ?></h1>
       <span class="etiket"><?= esc(ayar('sezon', 'Sezon 1')) ?><span class="tik"><i></i><i class="b"></i><i class="c"></i></span><?= esc(ayar('sunucuAdi', 'Sunucum')) ?><?php if (ayar('sunucuAdres') !== ''): ?><span class="tik"><i></i><i class="b"></i><i class="c"></i></span><?= esc(ayar('sunucuAdres')) ?><?php endif; ?></span>
     </div>
     <div class="sag">
@@ -271,7 +271,7 @@ tbody tr:hover td { cursor:pointer; }
     <div class="baslikSonuc">
       &laquo;<?= esc($ara) ?>&raquo; için <b><?= count($gosterilen) ?></b> sonuç
       <?php if ($gosterilen === []): ?>
-        &middot; sicilde bu adla kayıtlı oyuncu yok
+        &middot; kaesrade bu adla kayıtlı oyuncu yok
       <?php endif; ?>
     </div>
   </div>

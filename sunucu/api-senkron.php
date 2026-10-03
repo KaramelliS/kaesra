@@ -5,8 +5,8 @@ declare(strict_types=1);
  * İstatistik alımı. Eklenti tur sonunda ham sayaç DELTASI gönderiyor.
  *
  *   POST /api-senkron.php
- *   X-Sicil-Anahtar: <paylasilan anahtar>
- *   X-Sicil-Zaman / X-Sicil-Tek
+ *   X-Kaesra-Anahtar: <paylasilan anahtar>
+ *   X-Kaesra-Zaman / X-Kaesra-Tek
  *   {
  *     "port": 27015, "oturum": "a1b2c3d4", "parti": 7,
  *     "gecen": 96, "harita": "de_dust2",
@@ -28,8 +28,8 @@ declare(strict_types=1);
  * düzeltilince bütün sıralama geriye dönük yeniden hesaplanabiliyor.
  */
 
-require __DIR__ . '/sicil-api.php';
-require_once __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-api.php';
+require_once __DIR__ . '/kaesra-ortak.php';
 
 yontemDayat('POST');
 
@@ -238,7 +238,7 @@ try {
     [$depo, $nonce] = tekrariEngelle($depo, $simdi);
 
     /* İlk partide sunucu kaydı yok. Yalnız gözlem için tutuluyor
-       (sicil_durum ve "son görülme" satırı), bir yetki kararı değil. */
+       (kaesra_durum ve "son görülme" satırı), bir yetki kararı değil. */
     if (!isset($depo['sunucular'][$sunucuAnahtari])) {
         $depo['sunucular'][$sunucuAnahtari] = ['ilk' => gmdate('c')];
     }
@@ -340,7 +340,7 @@ try {
 } catch (Throwable $e) {
     depoKapat($tutamac);
 
-    error_log(sprintf('[sicil] senkron ucu patladi: %s @ %s:%d',
+    error_log(sprintf('[kaesra] senkron ucu patladi: %s @ %s:%d',
         str_replace(["\n", "\r"], ' ', $e->getMessage()), $e->getFile(), $e->getLine()));
 
     sorun(500, 'Beklenmeyen hata', 'Parti islenirken sunucu tarafinda bir hata olustu. '

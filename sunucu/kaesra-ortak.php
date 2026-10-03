@@ -16,7 +16,7 @@ declare(strict_types=1);
  */
 
 /**
- * Etkin tema. Değiştirmek için burayı düzenleyin ya da SICIL_TEMA ortam
+ * Etkin tema. Değiştirmek için burayı düzenleyin ya da KAESRA_TEMA ortam
  * değişkenini kullanın (test sunucusunda iki temayı yan yana görmek için).
  */
 const TEMA = 'klasik';
@@ -124,7 +124,7 @@ function oyuncuListesi(): array
         return $liste;
     }
 
-    require_once __DIR__ . '/sicil-depo.php';
+    require_once __DIR__ . '/kaesra-depo.php';
     $depo = depoOku();
 
     if ($depo['oyuncular'] === []) {
@@ -379,7 +379,7 @@ function kisaltStili(): string
          . ' border-bottom:1px solid rgba(236,232,225,.10); }'
          . '.kisaltSerit .sayfalar a, .kisaltSerit .sayfalar b {'
          . ' display:inline-block; min-width:24px; padding:3px 6px; margin-left:4px;'
-         . " font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:12px;"
+         . " font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:12px;"
          . ' text-align:center; text-decoration:none; }'
          . '.kisaltSerit .sayfalar a { color:#93A2AE; border:1px solid rgba(236,232,225,.14); }'
          . '.kisaltSerit .sayfalar a:hover { color:#0B1219; background:#FF4655; border-color:#FF4655; }'
@@ -526,7 +526,7 @@ function sure(int $saniye): string
  */
 function tema(): string
 {
-    return (string) file_get_contents(__DIR__ . '/sicil-tema.css');
+    return (string) file_get_contents(__DIR__ . '/kaesra-tema.css');
 }
 
 function motdBasliklari(): void

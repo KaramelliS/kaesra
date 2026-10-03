@@ -119,7 +119,7 @@ def yaz(satirlar):
     o.append("/**\n * TOHUM VERİ — docs/tohum-uret.py ile üretildi, elle düzenlemeyin.\n")
     o.append(f" * seed={TOHUM}, en yüksek KP={en}, merdiven tavanı={TAVAN}.\n")
     o.append(" * Ayrıntı: docs/TOHUM.md\n */\n\n")
-    o.append("$SICIL_OYUNCULAR = [\n")
+    o.append("$KAESRA_OYUNCULAR = [\n")
     for r in satirlar:
         o.append("    [\n")
         o.append(f"        'ad' => '{r['ad']}', 'kimlik' => '{r['kimlik']}',\n")
@@ -140,9 +140,9 @@ def yaz(satirlar):
  * yanlış yere eklemek tabloyu sessizce bozuyor. Gerçek sorgu da ORDER BY
  * kp DESC olacak, o yüzden burada da aynı garanti veriliyor.
  */
-usort($SICIL_OYUNCULAR, static fn(array $a, array $b): int => $b['kp'] <=> $a['kp']);
+usort($KAESRA_OYUNCULAR, static fn(array $a, array $b): int => $b['kp'] <=> $a['kp']);
 
-return $SICIL_OYUNCULAR;
+return $KAESRA_OYUNCULAR;
 """)
     return ''.join(o)
 

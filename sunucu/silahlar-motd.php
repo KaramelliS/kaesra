@@ -12,7 +12,7 @@ declare(strict_types=1);
  * Silahlar toplam kill'e göre sıralı: sunucuda ne oynandığını da gösteriyor.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -86,8 +86,8 @@ $enCokAdi = $silahlar === [] ? '—' : silah((string) array_key_first($silahlar)
 .satir .gorsel img { width:78px; height:27px; }
 
 .satir .isim { width:160px; }
-.satir .isim .temaAdi { font-family:'Sicil Display',sans-serif; font-size:17px; line-height:1; }
-.satir .isim .hamAd { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:11px;
+.satir .isim .temaAdi { font-family:'Kaesra Display',sans-serif; font-size:17px; line-height:1; }
+.satir .isim .hamAd { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:11px;
                    letter-spacing:.16em; text-transform:uppercase; color:#4F6376; margin-top:2px; }
 
 /* Çubuklar nötr; yalnız listenin birincisi kırmızı yanıyor. Yedi kırmızı
@@ -99,7 +99,7 @@ $enCokAdi = $silahlar === [] ? '—' : silah((string) array_key_first($silahlar)
 .satir.birinci .orta .cizgi i { background:#FF4655; }
 .satir .orta .altYazi { color:#5E7080; font-size:12px; margin-top:5px; }
 
-.satir .toplam { width:90px; text-align:right; font-family:'Sicil Display',sans-serif; font-size:19px; }
+.satir .toplam { width:90px; text-align:right; font-family:'Kaesra Display',sans-serif; font-size:19px; }
 
 .satir .usta { width:230px; text-align:right; }
 .satir .usta a { color:#ECE8E1; text-decoration:none; }
@@ -111,7 +111,7 @@ $enCokAdi = $silahlar === [] ? '—' : silah((string) array_key_first($silahlar)
 <body style="background:#0B1219;color:#ECE8E1">
 
 <div class="gezinme" style="display:flex;justify-content:space-between;padding:9px 26px;background:#0E161F;border-bottom:1px solid rgba(236,232,225,.10)">
-  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Sicil Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
+  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Kaesra Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
   <span class="etiket">Silah sıralaması</span>
 </div>
 

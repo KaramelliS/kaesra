@@ -1,4 +1,4 @@
-# SICIL — NOTICE / BİLDİRİM
+# KAESRA — NOTICE / BİLDİRİM
 
 **Telif (c) 2026 Berkay. Tüm hakları saklıdır.**
 
@@ -32,9 +32,9 @@ veriyorum — bkz. aşağıdaki §4.
   paketin, kurulum hizmetinin, "hazır sunucu paketi"nin veya aboneliğin
   parçası olarak veremezsiniz.
 - **Kendi eseriniz gibi göstermek.** Telif bildirimini, bu NOTICE
-  dosyasını, `sicil.sma` başlığındaki atıf satırını veya kaynak
+  dosyasını, `kaesra.sma` başlığındaki atıf satırını veya kaynak
   dosyalardaki yorumları silemezsiniz, kısaltamazsınız, gizleyemezsiniz.
-- **"Sicil" adını veya logosunu kullanmak.** Bkz. §5.
+- **"Kaesra" adını veya logosunu kullanmak.** Bkz. §5.
 - **Lisansı değiştirmek.** Türev eserler de CC BY-NC-SA 4.0 altında
   yayınlanmak zorundadır (ShareAlike). Kapalı kaynak yapamazsınız.
 
@@ -42,7 +42,7 @@ veriyorum — bkz. aşağıdaki §4.
 
 Dağıttığınız her kopyada şunu görünür bir yerde tutun:
 
-> Sicil — CS 1.6 rank ve istatistik sistemi
+> Kaesra — CS 1.6 rank ve istatistik sistemi
 > Telif (c) 2026 Berkay. CC BY-NC-SA 4.0.
 > Orijinal kaynak: <DEPO-ADRESI>
 
@@ -66,14 +66,14 @@ Bu izin geri alınamaz şekilde bu sürüm ve türevleri için geçerlidir.
 
 ## 5. Marka
 
-"**Sicil**" adı ve logosu bu lisans kapsamında **değildir**. CC BY-NC-SA 4.0
+"**Kaesra**" adı ve logosu bu lisans kapsamında **değildir**. CC BY-NC-SA 4.0
 zaten marka hakkı vermez (§2(a)(2), §7(b)); burada açıkça yineleniyor.
 
 Eseri dağıtırken veya çatallarken:
 
 - Kendi sürümünüze **farklı bir ad** verin.
-- "Sicil" adını yalnızca eserin kaynağını belirtmek için, atıf amacıyla
-  kullanın ("Sicil tabanlı" gibi) — kendi ürününüzün adı olarak değil.
+- "Kaesra" adını yalnızca eserin kaynağını belirtmek için, atıf amacıyla
+  kullanın ("Kaesra tabanlı" gibi) — kendi ürününüzün adı olarak değil.
 
 ## 6. Üçüncü taraf bileşenler
 
@@ -118,7 +118,7 @@ sorumluluğu size aittir.
 
 ## English summary
 
-*Sicil* is a rank & statistics system for Counter-Strike 1.6, licensed under
+*Kaesra* is a rank & statistics system for Counter-Strike 1.6, licensed under
 **CC BY-NC-SA 4.0**. Copyright (c) 2026 Berkay. All rights reserved.
 
 **You may** use, modify, and share it, including on a monetized game server
@@ -127,7 +127,7 @@ is *not* considered commercial use of the work (see §4).
 
 **You may not** sell the work or any derivative of it, include it in a paid
 product, bundle, or subscription, remove attribution, pass it off as your
-own, or use the name/logo "Sicil" for your own product.
+own, or use the name/logo "Kaesra" for your own product.
 
 Derivatives must stay under CC BY-NC-SA 4.0. A separate commercial license
 is available from the copyright holder (§7).

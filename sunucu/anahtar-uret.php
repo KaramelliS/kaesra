@@ -11,7 +11,7 @@ declare(strict_types=1);
  * Çıkan 64 haneli değeri İKİ yere de yazmak gerekiyor:
  *
  *   1. sunucu/veri/anahtar.txt                      (bu betik yapar)
- *   2. cstrike/addons/amxmodx/configs/sicil.cfg     → sicil_anahtar "..."
+ *   2. cstrike/addons/amxmodx/configs/kaesra.cfg     → kaesra_anahtar "..."
  *
  * İkisi birebir aynı olmazsa API her isteği 401 ile çevirir ve eklenti
  * sessizce veri göndermez.
@@ -71,7 +71,7 @@ if (is_file($hedef) && !$zorla) {
     $eski = trim((string) file_get_contents($hedef));
     fwrite(STDERR, sprintf(
         "%s zaten var (%s***%s).\nUstune yazmak icin:  php anahtar-uret.php --zorla\n"
-        . "Not: yenilerseniz sicil.cfg icindeki sicil_anahtar degerini de\n"
+        . "Not: yenilerseniz kaesra.cfg icindeki kaesra_anahtar degerini de\n"
         . "guncellemeniz gerekiyor, yoksa API 401 doner.\n",
         basename($hedef),
         substr($eski, 0, 6),
@@ -98,8 +98,8 @@ if (file_put_contents($hedef, $anahtar . "\n") === false) {
 echo "Anahtar uretildi: $hedef\n\n";
 echo "  $anahtar\n\n";
 echo "Simdi bunu oyun sunucusuna yazin:\n";
-echo "  cstrike/addons/amxmodx/configs/sicil.cfg\n";
-echo "  sicil_anahtar \"$anahtar\"\n\n";
+echo "  cstrike/addons/amxmodx/configs/kaesra.cfg\n";
+echo "  kaesra_anahtar \"$anahtar\"\n\n";
 echo "Sonra haritayi yenileyin (changelevel de_dust2) ve konsolda\n";
-echo "  sicil_durum\n";
+echo "  kaesra_durum\n";
 echo "calistirip 'paylasilan anahtar: ayarli' satirini dogrulayin.\n";

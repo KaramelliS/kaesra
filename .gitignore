@@ -1,7 +1,7 @@
 # ---- Derleme ara ürünleri ----
-# sicil.amxx BİLEREK izleniyor: kurulumda AMXX derleyicisi olmayanlar
+# kaesra.amxx BİLEREK izleniyor: kurulumda AMXX derleyicisi olmayanlar
 # hazır ikiliyi kullanabilsin diye. Kendi derlemenizi üretirseniz
-# oyun/sicil.amxx değişecek — commit etmeden önce farkına bakın.
+# oyun/kaesra.amxx değişecek — commit etmeden önce farkına bakın.
 *.exe.log
 *.lst
 *.asm

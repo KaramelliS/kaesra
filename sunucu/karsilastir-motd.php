@@ -14,7 +14,7 @@ declare(strict_types=1);
  * tablosunda her satır kendi yönünü taşıyor.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -81,8 +81,8 @@ function bicimle(string $tur, float $deger): string
 .kafa .solKafa .perde4 { background:linear-gradient(90deg, rgba(11,18,25,.55) 0%, rgba(11,18,25,.90) 55%, #0B1219 100%); }
 .kafa .sagKafa .perde4 { background:linear-gradient(270deg, rgba(11,18,25,.55) 0%, rgba(11,18,25,.90) 55%, #0B1219 100%); }
 .kafa .ic { position:relative; }
-.kafa .ad { font-family:'Sicil Display',sans-serif; font-size:19px; line-height:.98; text-transform:uppercase; margin-top:4px; }
-.kafa .rutbe { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:13px; letter-spacing:.18em; text-transform:uppercase; margin-top:5px; }
+.kafa .ad { font-family:'Kaesra Display',sans-serif; font-size:19px; line-height:.98; text-transform:uppercase; margin-top:4px; }
+.kafa .rutbe { font-family:'Kaesra Dar',sans-serif; font-weight:600; font-size:13px; letter-spacing:.18em; text-transform:uppercase; margin-top:5px; }
 .kafa img.rozet { width:30px; height:30px; vertical-align:middle; }
 .kafa .ajanSat { color:#93A2AE; font-size:11px; margin-top:2px; }
 .kafa .ajanSat img { width:18px; height:18px; vertical-align:middle; margin:0 6px; }
@@ -98,10 +98,10 @@ function bicimle(string $tur, float $deger): string
 /* Kazanan taraf parlak beyaz, kaybeden soluk. Eskiden kazanan kırmızıydı;
    kırmızı bu sayfada SOL oyuncunun çubuk rengi, sağdaki kazanınca değeri
    soldakinin rengiyle yanıyordu — yanlış tarafı işaret eden bir vurgu. */
-.olcut .deg { width:92px; font-family:'Sicil Display',sans-serif; font-size:13px; line-height:1.25; color:#5E7080; }
+.olcut .deg { width:92px; font-family:'Kaesra Display',sans-serif; font-size:13px; line-height:1.25; color:#5E7080; }
 .olcut .deg.sagD { text-align:right; }
 .olcut .deg.kazanan { color:#ECE8E1; font-size:15px; }
-.olcut .ad2 { flex:1; text-align:center; font-family:'Sicil Dar',sans-serif; font-weight:600;
+.olcut .ad2 { flex:1; text-align:center; font-family:'Kaesra Dar',sans-serif; font-weight:600;
               font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#5E7080; }
 .olcut .bar { display:flex; height:3px; margin-top:2px; background:rgba(236,232,225,.07); }
 .olcut .bar i { display:block; height:3px; }
@@ -114,17 +114,17 @@ function bicimle(string $tur, float $deger): string
 <body style="background:#0B1219;color:#ECE8E1">
 
 <div class="gezinme" style="display:flex;justify-content:space-between;padding:9px 22px;background:#0E161F;border-bottom:1px solid rgba(236,232,225,.10)">
-  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Sicil Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
+  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Kaesra Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
   <span class="etiket">Karşılaştırma</span>
 </div>
 
 <?php if ($sol === null || $sag === null): ?>
   <div class="yok">
     <span class="etiket">Eksik kimlik</span>
-    <h1 style="font-family:'Sicil Display',sans-serif;font-size:38px;text-transform:uppercase;margin:6px 0 0">Karşılaştırılacak iki oyuncu gerek</h1>
+    <h1 style="font-family:'Kaesra Display',sans-serif;font-size:38px;text-transform:uppercase;margin:6px 0 0">Karşılaştırılacak iki oyuncu gerek</h1>
     <p style="color:#6E7F8C;max-width:600px">
       Oyun içinde <b style="color:#ECE8E1">/karsilastir &lt;isim&gt;</b> yazarsan seninle o oyuncu
-      yan yana gelir. İkisinden biri sicilde yoksa bu sayfa açılmıyor.
+      yan yana gelir. İkisinden biri kaesrade yoksa bu sayfa açılmıyor.
     </p>
   </div>
 <?php else: ?>

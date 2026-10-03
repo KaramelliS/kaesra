@@ -11,18 +11,18 @@ Görüntüleri kendiniz yakalamanız gerekiyor. Eklenti bunun için bir rcon
 komutuyla geliyor:
 
 ```
-sicil_goster <ad parçası> <komut>
+kaesra_goster <ad parçası> <komut>
 ```
 
 Örneğin:
 
 ```
-sicil_goster kaptan /top
-sicil_goster kaptan /rank
-sicil_goster kaptan /rutbeler
-sicil_goster kaptan /silahlar
-sicil_goster kaptan /haritalar
-sicil_goster kaptan /karsilastir sessiz_adim
+kaesra_goster kaptan /top
+kaesra_goster kaptan /rank
+kaesra_goster kaptan /rutbeler
+kaesra_goster kaptan /silahlar
+kaesra_goster kaptan /haritalar
+kaesra_goster kaptan /karsilastir sessiz_adim
 ```
 
 Komut, adı eşleşen oyuncunun ekranında MOTD penceresini açıyor — oyuncunun
@@ -32,7 +32,7 @@ açmanın tek yolu bu.
 ## Yakalama sırası
 
 1. Sunucuyu ve web servisini kaldırın, bir tur oynatın (depo dolsun).
-2. `sicil_goster` ile sayfayı açın.
+2. `kaesra_goster` ile sayfayı açın.
 3. Pencereyi yakalayın (OBS, `Win+Shift+S`, veya `sunucu/pencere-cek.ps1`
    benzeri bir betik).
 4. **Yayınlamadan önce başlık şeridini kontrol edin.** `yapilandirma.php`

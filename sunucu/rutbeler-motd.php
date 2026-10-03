@@ -16,7 +16,7 @@ declare(strict_types=1);
  * kaldı" şeridi çıkıyor — /rutbeler komutu bunu kendiliğinden ekliyor.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 motdBasliklari();
 
 $oyuncular = oyuncuListesi();
@@ -102,11 +102,11 @@ $sayfaBoyu = (int) ceil(count($numaralar) / $sayfaAdedi);
   background:#101A24; border-bottom:2px solid #FF4655;
 }
 .durumSerit img { width:44px; height:44px; margin-right:14px; }
-.durumSerit .buyuk { font-family:'Sicil Display',sans-serif; font-size:20px; line-height:1; text-transform:uppercase; }
+.durumSerit .buyuk { font-family:'Kaesra Display',sans-serif; font-size:20px; line-height:1; text-transform:uppercase; }
 .durumSerit .kucukAlt { color:#93A2AE; font-size:13px; margin-top:5px; }
 .durumSerit .kucukAlt b { color:#ECE8E1; font-weight:500; }
 .durumSerit .saga { margin-left:auto; text-align:right; }
-.durumSerit .saga .kp { font-family:'Sicil Display',sans-serif; font-size:26px; line-height:1; color:#FF4655; }
+.durumSerit .saga .kp { font-family:'Kaesra Display',sans-serif; font-size:26px; line-height:1; color:#FF4655; }
 
 .basamak {
   display:flex; align-items:center; padding:3px 22px;
@@ -117,15 +117,15 @@ $sayfaBoyu = (int) ceil(count($numaralar) / $sayfaAdedi);
 
 .basamak img { width:26px; height:26px; margin-right:11px; }
 .basamak .sayi {
-  width:34px; font-family:'Sicil Dar',sans-serif; font-weight:600;
+  width:34px; font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:13px; color:#4F6376;
 }
 .basamak .isim2 {
-  width:150px; font-family:'Sicil Dar',sans-serif; font-weight:600;
+  width:150px; font-family:'Kaesra Dar',sans-serif; font-weight:600;
   font-size:16px; letter-spacing:.10em; text-transform:uppercase;
 }
-.basamak .esik { width:100px; font-family:'Sicil Display',sans-serif; font-size:16px; }
-.basamak .esik s { color:#4F6376; font-family:'Sicil Govde',sans-serif; font-size:12px; text-decoration:none; }
+.basamak .esik { width:100px; font-family:'Kaesra Display',sans-serif; font-size:16px; }
+.basamak .esik s { color:#4F6376; font-family:'Kaesra Govde',sans-serif; font-size:12px; text-decoration:none; }
 .basamak .aralik { flex:1; color:#5E7080; font-size:12px; }
 /* Doluluk çubuğu kademenin KENDİ renginde — kırmızı değil. Kırmızı bu
    sayfada yalnız tıklanabilir şeylerde (sayfa düğmeleri, "benim" şeridi);
@@ -137,7 +137,7 @@ $sayfaBoyu = (int) ceil(count($numaralar) / $sayfaAdedi);
 <body style="background:#0B1219;color:#ECE8E1">
 
 <div class="gezinme" style="display:flex;justify-content:space-between;padding:9px 26px;background:#0E161F;border-bottom:1px solid rgba(236,232,225,.10)">
-  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Sicil Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
+  <a href="siralama-motd.php" style="color:#93A2AE;text-decoration:none;font-family:'Kaesra Dar',sans-serif;font-weight:600;font-size:13px;letter-spacing:.18em;text-transform:uppercase">&larr; Sıralamaya dön</a>
   <span class="etiket">Rütbe merdiveni</span>
 </div>
 

@@ -6,8 +6,8 @@ Rütbe adları, silah adları, renkler ve görsellerin **hepsi** tek klasörde:
 sunucu/tema/<ad>/katalog.php
 ```
 
-Sayfalarda ve `sicil-ortak.php`'de sabit metin **yok**. Etkin tema
-`sicil-ortak.php` içindeki `TEMA` sabitinden okunuyor.
+Sayfalarda ve `kaesra-ortak.php`'de sabit metin **yok**. Etkin tema
+`kaesra-ortak.php` içindeki `TEMA` sabitinden okunuyor.
 
 Varsayılan tema **`klasik`**: 25 kademe (Acemi 1 → Zirve), CS 1.6'nın kendi
 silah adları, **hiç görsel yok**. Sıfır ek dosya, sıfır telif riski, kurulum
@@ -20,7 +20,7 @@ sonrası sayfa hemen dolu görünüyor.
 ```bash
 cp -r sunucu/tema/klasik sunucu/tema/benimtemam
 # düzenleyin
-# sonra sicil-ortak.php içinde:  const TEMA = 'benimtemam';
+# sonra kaesra-ortak.php içinde:  const TEMA = 'benimtemam';
 ```
 
 `katalog.php` bir PHP dizisi döndürüyor. Şema:
@@ -32,7 +32,7 @@ return [
     'bayrakVar' => true,         // bayrak/ klasöründen ülke bayrakları
 
     // Rütbe merdiveni. Numaralar 1'den başlar, ARTAN ve BOŞLUKSUZ olmalı:
-    // KP eşikleri bu sıradan türetiliyor (sicil-ortak.php → kademeEsikleri).
+    // KP eşikleri bu sıradan türetiliyor (kaesra-ortak.php → kademeEsikleri).
     // Son kademe "en üst" sayılır; onda RR her zaman 100 görünür.
     'kademe' => [
         1 => ['ad' => 'Acemi 1', 'dosya' => null, 'renk' => '#8C9196'],
@@ -84,7 +84,7 @@ Merdivenin tavanı **3816 KP** (90'dan başlayıp +6 artan 24 adım). Kendi
 merdiveninizi kurarken gerçek sunucunuzdaki KP dağılımının bu tavanın
 altında kaldığını kontrol edin — yoksa herkes en üst kademede yığılır ve
 merdiven anlamsızlaşır. Tavanı değiştirmek isterseniz
-`sicil-ortak.php → kademeEsikleri()` içindeki `90` ve `+6` değerlerini
+`kaesra-ortak.php → kademeEsikleri()` içindeki `90` ve `+6` değerlerini
 düzenleyin.
 
 ---
@@ -118,6 +118,6 @@ seçer:
 'silah'       => ['Kurt-47' => ['dosya' => 'silah/kurt47.png', 'sinif' => 'Tüfek'], ...],
 ```
 
-Tek uyarı: `oyun/sicil.sma` içindeki `BILINEN_SILAHLAR` listesi **motor
+Tek uyarı: `oyun/kaesra.sma` içindeki `BILINEN_SILAHLAR` listesi **motor
 adlarını** (`ak47`) taşır ve API'nin kabul ettiği anahtarlardır. Onu
 değiştirmeyin — tema yalnız görünen adı değiştirir, telgrafı değil.

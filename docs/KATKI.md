@@ -57,7 +57,7 @@ Kapsamlar: `oyun`, `senkron`, `motd`, `tema`, `kurulum`, `test`, `docs`.
 - **Pawn:** fonksiyon adları `BuyukHarfBaslar`, değişkenler `kucukHarf`.
   Blok yorumları Türkçe ve **neden**'i anlatır, ne yaptığını değil.
 - **PHP:** `declare(strict_types=1);` her dosyanın başında. Yardımcı
-  fonksiyonlar `sicil-ortak.php` içinde, sayfalarda tekrar yok.
+  fonksiyonlar `kaesra-ortak.php` içinde, sayfalarda tekrar yok.
 - **Hiçbir sayfada sabit metin yok.** Görünen her şey ya
   `yapilandirma.php`'den ya temadan gelir. Bir sunucu adı veya IP'yi
   HTML'e elle yazmak, çatallayan herkesin sizin adınızı taşıması demek.

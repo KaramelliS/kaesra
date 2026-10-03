@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * GoldSrc rcon istemcisi.
  *
- *   SICIL_RCON_SIFRE=<sifre> php rcon.php "status"
+ *   KAESRA_RCON_SIFRE=<sifre> php rcon.php "status"
  *   php rcon.php --sifre <sifre> "bot_quota 10" "bot_add_t"
  *
  * Sifre dosyada DURMUYOR - ortamdan veya komut satirindan geliyor.
@@ -20,7 +20,7 @@ declare(strict_types=1);
  * içindeydi ve depo herkese açıldığı anda sızıyordu. Şimdi üçü de
  * ortamdan veya komut satırından geliyor:
  *
- *   SICIL_RCON_$sifre=benimsifrem php rcon.php "status"
+ *   KAESRA_RCON_$sifre=benimsifrem php rcon.php "status"
  *   php rcon.php --sifre x --adres 127.0.0.1 --port 27015 "status"
  *
  * Geliştirmede kolaylık için şifre test/.rcon-sifre dosyasından da
@@ -28,10 +28,10 @@ declare(strict_types=1);
  */
 $secenekler = getopt('', ['adres:', 'port:', 'sifre:']);
 
-$sunucu = (string) ($secenekler['adres'] ?? (getenv('SICIL_RCON_ADRES') ?: '127.0.0.1'));
-$port   = (int) ($secenekler['port'] ?? (getenv('SICIL_RCON_$port') ?: 27015));
+$sunucu = (string) ($secenekler['adres'] ?? (getenv('KAESRA_RCON_ADRES') ?: '127.0.0.1'));
+$port   = (int) ($secenekler['port'] ?? (getenv('KAESRA_RCON_$port') ?: 27015));
 
-$sifre = (string) ($secenekler['sifre'] ?? (getenv('SICIL_RCON_$sifre') ?: ''));
+$sifre = (string) ($secenekler['sifre'] ?? (getenv('KAESRA_RCON_$sifre') ?: ''));
 if ($sifre === '') {
     $dosya = __DIR__ . '/.rcon-sifre';
     if (is_file($dosya)) {
@@ -50,12 +50,12 @@ foreach (array_slice($argv, 1) as $parca) {
 }
 
 if ($komutlar === []) {
-    fwrite(STDERR, "Kullanım: SICIL_RCON_$sifre=<sifre> php rcon.php \"status\"
+    fwrite(STDERR, "Kullanım: KAESRA_RCON_$sifre=<sifre> php rcon.php \"status\"
 ");
     exit(2);
 }
 if ($sifre === '') {
-    fwrite(STDERR, 'rcon sifresi verilmedi. SICIL_RCON_SIFRE ortam degiskenini,
+    fwrite(STDERR, 'rcon sifresi verilmedi. KAESRA_RCON_SIFRE ortam degiskenini,
 '
         . '--sifre secenegini veya test/.rcon-sifre dosyasini kullanin.
 ');

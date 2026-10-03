@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Tema: KLASİK — Sicil'in varsayılan, görselsiz teması.
+ * Tema: KLASİK — Kaesra'in varsayılan, görselsiz teması.
  *
  * Bu tema bilerek hiçbir görsel taşımıyor. Bütün `dosya` alanları null ve
  * sayfalar buna göre <img> etiketini hiç basmıyor (bkz. varlikYolu()).
@@ -82,7 +82,7 @@ return [
      * yerine başka bir ad) yalnız bu tabloyu ve silah[] anahtarlarını
      * değiştirir; eklentiye ve motd sayfalarına dokunmaz.
      *
-     * BILINEN_SILAHLAR listesi oyun tarafında (sicil.sma) duruyor ve
+     * BILINEN_SILAHLAR listesi oyun tarafında (kaesra.sma) duruyor ve
      * buradaki silahEsleme ANAHTARLARIYLA birebir aynı olmalı. API
      * tanımadığı bir silah adı görürse partinin TAMAMINI 422 ile
      * reddediyor — yani tek bir sis bombası ölümü bütün turun verisini

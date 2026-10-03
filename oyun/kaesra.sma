@@ -1,5 +1,5 @@
 /**
- * Sicil — CS 1.6 için rank ve istatistik sistemi.
+ * Kaesra — CS 1.6 için rank ve istatistik sistemi.
  *
  * Telif (c) 2026 Berkay. Tüm hakları saklıdır.
  * Bu dosya depodaki LICENSE koşullarıyla dağıtılır: kullanmak, değiştirmek
@@ -59,7 +59,7 @@
 #define ASIST_ESIGI 40
 
 /**
- * API'nin tanıdığı silah adları — sicil-ortak.php içindeki SILAH_ESLEME
+ * API'nin tanıdığı silah adları — kaesra-ortak.php içindeki SILAH_ESLEME
  * anahtarlarının aynısı.
  *
  * Liste burada da duruyor çünkü api-senkron.php tanımadığı bir ad görürse
@@ -207,7 +207,7 @@ new g_uzatmaSayisi = 0    // bu haritada kaç kez uzatıldı; duyuru metni için
 
 public plugin_init()
 {
-    register_plugin("Sicil", SURUM, "sicil")
+    register_plugin("Kaesra", SURUM, "kaesra")
 
     g_kuyruk = ezhttp_create_queue()
 
@@ -220,7 +220,7 @@ public plugin_init()
      * ortasında kimse bunu yapmıyor. Aynı işleyiciye gidiyorlar.
      */
     register_clcmd("rank", "KonsolKomut")
-    register_clcmd("sicil", "KonsolKomut")
+    register_clcmd("kaesra", "KonsolKomut")
     register_clcmd("top", "KonsolKomut")
     register_clcmd("kp", "KonsolKomut")
     register_clcmd("oturum", "KonsolKomut")
@@ -252,28 +252,28 @@ public plugin_init()
      */
     register_event("CurWeapon", "SilahDurumu", "be", "1=1")
 
-    register_srvcmd("sicil_durum", "KonsolDurum")
-    register_srvcmd("sicil_yenile", "KonsolYenile")
+    register_srvcmd("kaesra_durum", "KonsolDurum")
+    register_srvcmd("kaesra_yenile", "KonsolYenile")
 
     /*
-     * Sunucudan bir oyuncuya sayfa açtırma: sicil_goster <ad parçası> <komut>
-     * Örn: sicil_goster Berkay /top
+     * Sunucudan bir oyuncuya sayfa açtırma: kaesra_goster <ad parçası> <komut>
+     * Örn: kaesra_goster Berkay /top
      *
      * İki işi var: rcon üzerinden uzaktan destek ("menün açılmıyor mu,
      * ben açayım bak") ve tanıtım görüntülerinin elle oynamadan alınması.
      * KomutDagit'e aynen giriyor; oyuncunun kendi yazdığından farksız.
      */
-    register_srvcmd("sicil_goster", "KonsolGoster")
+    register_srvcmd("kaesra_goster", "KonsolGoster")
 
     /*
-     * sicil_istemci <ad parçası> <komut> — oyuncuya istemci komutu iter.
+     * kaesra_istemci <ad parçası> <komut> — oyuncuya istemci komutu iter.
      * MOTD penceresi yalnız OK tıklamasıyla kapanıyor ve tanıtım çekimi
      * sırasında pencereyi dışarıdan kapatmanın tek yolu istemciye komut
      * bastırmak (retry gibi). rcon gerektirir; kayda geçer.
      */
-    register_srvcmd("sicil_istemci", "KonsolIstemci")
+    register_srvcmd("kaesra_istemci", "KonsolIstemci")
 
-    register_cvar("sicil_surum", SURUM, FCVAR_SERVER | FCVAR_SPONLY)
+    register_cvar("kaesra_surum", SURUM, FCVAR_SERVER | FCVAR_SPONLY)
 }
 
 public plugin_cfg()
@@ -290,11 +290,11 @@ public plugin_cfg()
 
     g_sonParti = get_systime()
 
-    server_print("[sicil] %s yuklendi, api=%s, sohbet etiketi=%d", SURUM, g_api, g_sohbetEtiketi)
+    server_print("[kaesra] %s yuklendi, api=%s, sohbet etiketi=%d", SURUM, g_api, g_sohbetEtiketi)
 
     /*
      * ÖLÇÜLDÜ: bu kurulumda plugin_cfg, server.cfg'den ÖNCE çalışıyor.
-     * İlk okumada sicil_api ve sicil_anahtar hâlâ create_cvar'ın
+     * İlk okumada kaesra_api ve kaesra_anahtar hâlâ create_cvar'ın
      * varsayılanı oluyor — yani anahtar boş görünüyor ve eklenti kendini
      * kurulum aşamasında sanıp hiç veri göndermiyor. Ayarlar üç saniye
      * sonra bir kez daha okunuyor; asıl karar orada veriliyor.
@@ -310,7 +310,7 @@ public AyarlariTazele()
     AyarlariOku()
 
     if (!equal(onceki, g_api)) {
-        server_print("[sicil] api adresi guncellendi: %s", g_api)
+        server_print("[kaesra] api adresi guncellendi: %s", g_api)
 
         /* İlk okumadaki yanlış adrese gitmiş sorgular boş dönmüş olabilir. */
         KuyrugaHerkesiKoy()
@@ -322,34 +322,34 @@ public AyarlariTazele()
          * ve MOTD sayfalarını deneyebilsin, yalnız web servisine veri
          * gönderilmiyor.
          */
-        server_print("[sicil] sicil_anahtar bos. Veri gonderilmeyecek;")
-        server_print("[sicil] php sunucu/anahtar-uret.php ile bir anahtar uretip sicil.cfg icine yazin.")
+        server_print("[kaesra] kaesra_anahtar bos. Veri gonderilmeyecek;")
+        server_print("[kaesra] php sunucu/anahtar-uret.php ile bir anahtar uretip kaesra.cfg icine yazin.")
     }
 }
 
 AyarlariOku()
 {
     g_api[0] = EOS
-    get_pcvar_string(OlusturVeyaBul("sicil_api", "http://127.0.0.1:8130",
-        "Sicil web servisinin kok adresi, sonunda / olmadan"), g_api, charsmax(g_api))
+    get_pcvar_string(OlusturVeyaBul("kaesra_api", "http://127.0.0.1:8130",
+        "Kaesra web servisinin kok adresi, sonunda / olmadan"), g_api, charsmax(g_api))
 
-    get_pcvar_string(OlusturVeyaBul("sicil_anahtar", "",
+    get_pcvar_string(OlusturVeyaBul("kaesra_anahtar", "",
         "Web servisiyle paylasilan anahtar. Bos ise eklenti veri gondermez."), g_anahtar, charsmax(g_anahtar))
 
-    g_gunluk = get_pcvar_num(OlusturVeyaBul("sicil_gunluk", "0", "1 ise her komut konsola yazilir"))
-    g_sohbetEtiketi = get_pcvar_num(OlusturVeyaBul("sicil_sohbet_etiketi", "1",
+    g_gunluk = get_pcvar_num(OlusturVeyaBul("kaesra_gunluk", "0", "1 ise her komut konsola yazilir"))
+    g_sohbetEtiketi = get_pcvar_num(OlusturVeyaBul("kaesra_sohbet_etiketi", "1",
         "1 ise sohbette oyuncu adinin onunde rutbesi gorunur"))
-    g_botlariSay = get_pcvar_num(OlusturVeyaBul("sicil_botlari_say", "0",
+    g_botlariSay = get_pcvar_num(OlusturVeyaBul("kaesra_botlari_say", "0",
         "1 ise botlarin istatistigi de tutulur; test icin")) != 0
 
-    g_sohbetKodlama = get_pcvar_num(OlusturVeyaBul("sicil_sohbet_kodlama", "0",
+    g_sohbetKodlama = get_pcvar_num(OlusturVeyaBul("kaesra_sohbet_kodlama", "0",
         "Sohbet ve HUD kodlamasi: 0 UTF-8, 1 CP1254 (eski istemci), 2 ASCII"))
 
-    g_uzatmaAcik = get_pcvar_num(OlusturVeyaBul("sicil_uzatma", "1",
+    g_uzatmaAcik = get_pcvar_num(OlusturVeyaBul("kaesra_uzatma", "1",
         "1 ise beraberlikte mac uzar: 12-12'de 14, 13-13'te 15 kazanir"))
 
     if (g_sohbetKodlama < KOD_UTF8 || g_sohbetKodlama > KOD_ASCII) {
-        server_print("[sicil] sicil_sohbet_kodlama %d gecersiz, UTF-8'e donuldu", g_sohbetKodlama)
+        server_print("[kaesra] kaesra_sohbet_kodlama %d gecersiz, UTF-8'e donuldu", g_sohbetKodlama)
         g_sohbetKodlama = KOD_UTF8
     }
 
@@ -523,7 +523,7 @@ RutbeCek(const kimlikler[])
     ezhttp_get(adres, "RutbeGeldi", secenek)
 
     if (g_gunluk) {
-        server_print("[sicil] rutbe cekiliyor: %s", kimlikler)
+        server_print("[kaesra] rutbe cekiliyor: %s", kimlikler)
     }
 }
 
@@ -533,14 +533,14 @@ public RutbeGeldi(EzHttpRequest:istek)
         new mesaj[128]
         ezhttp_get_error_message(istek, mesaj, charsmax(mesaj))
         g_hataSayaci++
-        server_print("[sicil] rutbe cekilemedi: %s", mesaj)
+        server_print("[kaesra] rutbe cekilemedi: %s", mesaj)
         return
     }
 
     new kod = ezhttp_get_http_code(istek)
     if (kod != 200) {
         g_hataSayaci++
-        server_print("[sicil] rutbe ucu HTTP %d dondu", kod)
+        server_print("[kaesra] rutbe ucu HTTP %d dondu", kod)
         return
     }
 
@@ -560,7 +560,7 @@ public RutbeGeldi(EzHttpRequest:istek)
         ezhttp_get_data(istek, bas, charsmax(bas))
 
         g_hataSayaci++
-        server_print("[sicil] rutbe yaniti cozumlenemedi, gelen: %s", bas)
+        server_print("[kaesra] rutbe yaniti cozumlenemedi, gelen: %s", bas)
         return
     }
 
@@ -717,7 +717,7 @@ public HasarAldi(const kurban, const patlatici, const saldirgan, Float:hasar, ha
  * Öldüren dışında kurbana en çok hasar veren oyuncuya asist yazar.
  *
  * Eşik var çünkü sıyırıp geçen tek mermi asist sayılmamalı; KP'de asist
- * öldürmeyle aynı puanı veriyor (sicil-ortak.php KP_DEGERLERI).
+ * öldürmeyle aynı puanı veriyor (kaesra-ortak.php KP_DEGERLERI).
  */
 AsistVer(olen, olduren)
 {
@@ -849,7 +849,7 @@ public TurBitti(WinStatus:durum, ScenarioEventEndRound:olay, Float:gecikme)
  * tavanı ileri itiyoruz. Harita değişince cfg tavanı 13'e geri kurar,
  * yani uzatma haritaya hapsolur — kalıcı bir ayar bozulmaz.
  *
- * mp_winlimit 0 (kapalı) ya da sicil_uzatma 0 ise hiç karışmıyoruz:
+ * mp_winlimit 0 (kapalı) ya da kaesra_uzatma 0 ise hiç karışmıyoruz:
  * maxrounds ile dönen ya da süre limitli sunucular kendi bildiğinde.
  */
 UzatmaKontrol()
@@ -876,7 +876,7 @@ UzatmaKontrol()
     server_cmd("mp_winlimit %d", yeniTavan)
     g_uzatmaSayisi++
 
-    server_print("[sicil] uzatma %d: skor %d-%d, mac %d kazanan alir",
+    server_print("[kaesra] uzatma %d: skor %d-%d, mac %d kazanan alir",
         g_uzatmaSayisi, ct, tero, yeniTavan)
 
     Bilgi(0, "^x04UZATMA!^x01 Skor ^x03%d - %d^x01 · maçı ^x04%d^x01 kazanan tur alır", ct, tero, yeniTavan)
@@ -974,7 +974,7 @@ bool:PartiyiKur()
         }
 
         if (charsmax(g_partiGovde) - uzunluk < 512) {
-            server_print("[sicil] parti govdesi doldu, %d oyuncu sonraki partiye kaldi", sayi - i)
+            server_print("[kaesra] parti govdesi doldu, %d oyuncu sonraki partiye kaldi", sayi - i)
             break
         }
 
@@ -1047,9 +1047,9 @@ PartiyiYolla()
     ezhttp_post(adres, "SenkronYaniti", secenek)
 
     if (g_gunluk) {
-        server_print("[sicil] parti %d gonderiliyor, %d bayt%s",
+        server_print("[kaesra] parti %d gonderiliyor, %d bayt%s",
             g_parti, strlen(g_partiGovde), g_tekrarBekliyor ? " (tekrar)" : "")
-        server_print("[sicil] govde: %s", g_partiGovde)
+        server_print("[kaesra] govde: %s", g_partiGovde)
     }
 }
 
@@ -1063,7 +1063,7 @@ public SenkronYaniti(EzHttpRequest:istek)
 
         g_hataSayaci++
         g_tekrarBekliyor = true
-        server_print("[sicil] parti %d gonderilemedi (%s), sonraki tur sonunda tekrar denenecek",
+        server_print("[kaesra] parti %d gonderilemedi (%s), sonraki tur sonunda tekrar denenecek",
             g_parti, mesaj)
         return
     }
@@ -1081,13 +1081,13 @@ public SenkronYaniti(EzHttpRequest:istek)
          */
         if (kod == 409 || kod == 429 || kod >= 500) {
             g_tekrarBekliyor = true
-            server_print("[sicil] parti %d HTTP %d dondu, tekrar denenecek", g_parti, kod)
+            server_print("[kaesra] parti %d HTTP %d dondu, tekrar denenecek", g_parti, kod)
             return
         }
 
         new bas[256]
         ezhttp_get_data(istek, bas, charsmax(bas))
-        server_print("[sicil] parti %d HTTP %d ile reddedildi ve dusuruldu: %s", g_parti, kod, bas)
+        server_print("[kaesra] parti %d HTTP %d ile reddedildi ve dusuruldu: %s", g_parti, kod, bas)
 
         PartiyiKapat()
         return
@@ -1097,7 +1097,7 @@ public SenkronYaniti(EzHttpRequest:istek)
 
     new EzJSON:kok = ezhttp_parse_json_response(istek)
     if (kok == EzInvalid_JSON) {
-        server_print("[sicil] parti islendi ama yanit cozumlenemedi")
+        server_print("[kaesra] parti islendi ama yanit cozumlenemedi")
         return
     }
 
@@ -1165,13 +1165,13 @@ Imzala(EzHttpOptions:secenek)
 {
     new deger[128]
 
-    ezhttp_option_set_header(secenek, "X-Sicil-Anahtar", g_anahtar)
+    ezhttp_option_set_header(secenek, "X-Kaesra-Anahtar", g_anahtar)
 
     formatex(deger, charsmax(deger), "%d", get_systime())
-    ezhttp_option_set_header(secenek, "X-Sicil-Zaman", deger)
+    ezhttp_option_set_header(secenek, "X-Kaesra-Zaman", deger)
 
     NonceUret(deger, charsmax(deger))
-    ezhttp_option_set_header(secenek, "X-Sicil-Tek", deger)
+    ezhttp_option_set_header(secenek, "X-Kaesra-Tek", deger)
 
     ezhttp_option_set_header(secenek, "Content-Type", "application/json")
 }
@@ -1527,10 +1527,10 @@ KomutDagit(id, const ham[])
     trim(kalan)
 
     if (g_gunluk) {
-        server_print("[sicil] komut: %d '%s' arg='%s'", id, komut, kalan)
+        server_print("[kaesra] komut: %d '%s' arg='%s'", id, komut, kalan)
     }
 
-    if (equal(komut, "rank") || equal(komut, "sicil")) {
+    if (equal(komut, "rank") || equal(komut, "kaesra")) {
         KendiProfili(id)
     } else if (equal(komut, "top") || equal(komut, "top15") || equal(komut, "siralama")) {
         MotdIste(id, "siralama-motd.php")
@@ -1665,7 +1665,7 @@ BaskaProfil(id, const aranan[])
     get_user_authid(hedef, kimlik, charsmax(kimlik))
 
     if (equal(kimlik, "BOT")) {
-        Bilgi(id, "Botların sicili tutulmuyor.")
+        Bilgi(id, "Botların kaesrai tutulmuyor.")
         return
     }
 
@@ -1687,7 +1687,7 @@ Karsilastir(id, const aranan[])
     get_user_authid(hedef, onun, charsmax(onun))
 
     if (equal(benim, "BOT") || equal(onun, "BOT")) {
-        Bilgi(id, "Botlarin sicili tutulmuyor.")
+        Bilgi(id, "Botlarin kaesrai tutulmuyor.")
         return
     }
 
@@ -1742,11 +1742,11 @@ OturumOzeti(id)
 
 KomutListesi(id)
 {
-    Bilgi(id, "^x04Sicil komutları")
+    Bilgi(id, "^x04Kaesra komutları")
     Bilgi(id, "^x04/rank^x01 profilin  ^x04/top^x01 sıralama  ^x04/kp^x01 hızlı bakış")
     Bilgi(id, "^x04/silahlar^x01 silah sıralaması  ^x04/haritalar^x01 harita sıralaması")
     Bilgi(id, "^x04/rutbeler^x01 merdivenin tamamı  ^x04/oturum^x01 bu oturum")
-    Bilgi(id, "^x04/profil <isim>^x01 başkasının sicili  ^x04/karsilastir <isim>^x01 yan yana")
+    Bilgi(id, "^x04/profil <isim>^x01 başkasının kaesrai  ^x04/karsilastir <isim>^x01 yan yana")
     Bilgi(id, "Hepsi ^x04!^x01 ile de çalışır, takım sohbetinden de yazabilirsin.")
     Bilgi(id, "Tuşa bağlamak için: ^x04bind F5 rank^x01 (rank, top, kp, oturum, silahlar)")
 
@@ -1784,11 +1784,11 @@ public MotdGecikmeli(gorev)
     new adres[224]
     formatex(adres, charsmax(adres), "%s/%s%c_=%d", g_api, g_bekleyen[id], ayrac, get_systime())
 
-    show_motd(id, adres, "Sicil")
+    show_motd(id, adres, "Kaesra")
     g_bekleyen[id][0] = EOS
 
     if (g_gunluk) {
-        server_print("[sicil] motd %d -> %s", id, adres)
+        server_print("[kaesra] motd %d -> %s", id, adres)
     }
 }
 
@@ -1806,7 +1806,7 @@ public KonsolDurum()
         }
     }
 
-    server_print("--- Sicil %s ---", SURUM)
+    server_print("--- Kaesra %s ---", SURUM)
     server_print("  api             : %s", g_api)
     server_print("  paylasilan anahtar: %s", g_anahtar[0] == EOS ? "AYARLANMAMIS" : "ayarli")
     server_print("  rutbesi yuklu   : %d / %d oyuncu", rutbeli, sayi)
@@ -1828,7 +1828,7 @@ public KonsolDurum()
 }
 
 /**
- * sicil_yenile — bağlı herkesin rütbesini web'den tekrar çeker.
+ * kaesra_yenile — bağlı herkesin rütbesini web'den tekrar çeker.
  *
  * Panelden bir düzeltme yapıldığında sunucuyu yeniden başlatmadan
  * yansıtmak için. Rütbe atlama duyurusu da bunun üstünden çalışıyor.
@@ -1836,7 +1836,7 @@ public KonsolDurum()
 public KonsolYenile()
 {
     new sayi = KuyrugaHerkesiKoy()
-    server_print("[sicil] %d oyuncunun rutbesi yeniden cekiliyor", sayi)
+    server_print("[kaesra] %d oyuncunun rutbesi yeniden cekiliyor", sayi)
     return PLUGIN_HANDLED
 }
 
@@ -1847,7 +1847,7 @@ public KonsolGoster()
     read_argv(2, komut, charsmax(komut))
 
     if (aranan[0] == EOS || komut[0] == EOS) {
-        server_print("[sicil] kullanim: sicil_goster <ad parcasi> </komut> — orn: sicil_goster Berkay /top")
+        server_print("[kaesra] kullanim: kaesra_goster <ad parcasi> </komut> — orn: kaesra_goster Berkay /top")
         return PLUGIN_HANDLED
     }
 
@@ -1866,7 +1866,7 @@ public KonsolGoster()
     }
 
     if (id == 0) {
-        server_print("[sicil] '%s' ile eslesen oyuncu yok", aranan)
+        server_print("[kaesra] '%s' ile eslesen oyuncu yok", aranan)
         return PLUGIN_HANDLED
     }
 
@@ -1885,7 +1885,7 @@ public KonsolIstemci()
     read_argv(2, komut, charsmax(komut))
 
     if (aranan[0] == EOS || komut[0] == EOS) {
-        server_print("[sicil] kullanim: sicil_istemci <ad parcasi> <komut>")
+        server_print("[kaesra] kullanim: kaesra_istemci <ad parcasi> <komut>")
         return PLUGIN_HANDLED
     }
 
@@ -1902,11 +1902,11 @@ public KonsolIstemci()
     }
 
     if (id == 0) {
-        server_print("[sicil] '%s' ile eslesen oyuncu yok", aranan)
+        server_print("[kaesra] '%s' ile eslesen oyuncu yok", aranan)
         return PLUGIN_HANDLED
     }
 
-    server_print("[sicil] istemciye komut: %d <- '%s'", id, komut)
+    server_print("[kaesra] istemciye komut: %d <- '%s'", id, komut)
     client_cmd(id, "%s", komut)
     return PLUGIN_HANDLED
 }
@@ -2038,7 +2038,7 @@ YonetimMenusu(id)
     new bool:tam = (get_user_flags(id) & YETKI_TAM) != 0
 
     new baslik[64]
-    formatex(baslik, charsmax(baslik), "\ySicil \w%s^n\dyönetim menüsü", SURUM)
+    formatex(baslik, charsmax(baslik), "\yKaesra \w%s^n\dyönetim menüsü", SURUM)
     SohbetKodla(baslik, charsmax(baslik))
 
     new menu = menu_create(baslik, "YonetimSecim")
@@ -2122,7 +2122,7 @@ public YonetimSecim(id, menu, madde)
         case 4: KodlamayiCevir(id)
         case 5: {
             g_sohbetEtiketi = !g_sohbetEtiketi
-            set_cvar_num("sicil_sohbet_etiketi", g_sohbetEtiketi)
+            set_cvar_num("kaesra_sohbet_etiketi", g_sohbetEtiketi)
             Bilgi(id, "Sohbet rütbe etiketi artık %s.", g_sohbetEtiketi ? "açık" : "kapalı")
             YonetimMenusu(id)
         }
@@ -2140,7 +2140,7 @@ public YonetimSecim(id, menu, madde)
 KodlamayiCevir(id)
 {
     g_sohbetKodlama = (g_sohbetKodlama + 1) % 3
-    set_cvar_num("sicil_sohbet_kodlama", g_sohbetKodlama)
+    set_cvar_num("kaesra_sohbet_kodlama", g_sohbetKodlama)
 
     Bilgi(id, "Kodlama: ^x04%s^x01", KodlamaAdi())
     Bilgi(id, "Örnek: şğüöçı ŞĞÜÖÇİ · sıralama · hızlı bakış")
@@ -2149,11 +2149,11 @@ KodlamayiCevir(id)
     YonetimMenusu(id)
 }
 
-/** Oyuncu listesi; seçilince o oyuncunun sicili admin'e açılıyor. */
+/** Oyuncu listesi; seçilince o oyuncunun kaesrai admin'e açılıyor. */
 OyuncuMenusu(id)
 {
     new oyuncuBasligi[48]
-    copy(oyuncuBasligi, charsmax(oyuncuBasligi), "\ySicil \wOyuncu yönetimi")
+    copy(oyuncuBasligi, charsmax(oyuncuBasligi), "\yKaesra \wOyuncu yönetimi")
     SohbetKodla(oyuncuBasligi, charsmax(oyuncuBasligi))
 
     new menu = menu_create(oyuncuBasligi, "OyuncuSecim")
@@ -2218,7 +2218,7 @@ public OyuncuSecim(id, menu, madde)
     get_user_authid(hedef, kimlik, charsmax(kimlik))
 
     if (equal(kimlik, "BOT") || kimlik[0] == EOS) {
-        Bilgi(id, "Botun sicili tutulmuyor.")
+        Bilgi(id, "Botun kaesrai tutulmuyor.")
         return PLUGIN_HANDLED
     }
 
@@ -2229,7 +2229,7 @@ public OyuncuSecim(id, menu, madde)
     return PLUGIN_HANDLED
 }
 
-/** sicil_durum'un oyun içi karşılığı — admin konsola bakamıyor. */
+/** kaesra_durum'un oyun içi karşılığı — admin konsola bakamıyor. */
 DurumuYaz(id)
 {
     new oyuncular[MAX_PLAYERS], sayi, rutbeli = 0
@@ -2241,7 +2241,7 @@ DurumuYaz(id)
         }
     }
 
-    Bilgi(id, "Sicil ^x04%s^x01 · api ^x04%s^x01", SURUM, g_api)
+    Bilgi(id, "Kaesra ^x04%s^x01 · api ^x04%s^x01", SURUM, g_api)
     Bilgi(id, "Rütbesi yüklü ^x04%d/%d^x01 · hata ^x04%d^x01 · kodlama ^x04%s^x01",
         rutbeli, sayi, g_hataSayaci, KodlamaAdi())
     if (g_anahtar[0] == EOS) {
@@ -2262,7 +2262,7 @@ Bilgi(id, const bicim[], any:...)
     vformat(mesaj, charsmax(mesaj), bicim, 3)
     SohbetKodla(mesaj, charsmax(mesaj))
 
-    client_print_color(id, print_team_default, "^x04[Sicil]^x01 %s", mesaj)
+    client_print_color(id, print_team_default, "^x04[Kaesra]^x01 %s", mesaj)
 }
 
 /** Bilgi'nin HUD karşılığı; aynı çeviriden geçmesi için tek kapı. */

@@ -8,10 +8,10 @@ Köşeli parantezleri doldurmayı unutmayın: `[DEPO-ADRESI]`, `[İLETİŞİM]`.
 
 ## 1) Forum / Discord gönderisi
 
-> **Sicil — CS 1.6 için rank ve istatistik sistemi (açık kaynak)**
+> **Kaesra — CS 1.6 için rank ve istatistik sistemi (açık kaynak)**
 >
 > İki yıldır kendi sunucumda çalıştırdığım rank sistemini açık kaynak
-> yapıyorum. Oyuncu öldürür, asist yapar, bomba kurar, tur kazanır; Sicil
+> yapıyorum. Oyuncu öldürür, asist yapar, bomba kurar, tur kazanır; Kaesra
 > bunları toplar ve oyun içinde MOTD sayfaları olarak gösteriyor:
 > profil, sıralama, rütbe merdiveni, silah ve harita kırılımı, iki oyuncuyu
 > yan yana karşılaştırma.
@@ -60,7 +60,7 @@ AmxxEasyHttp ile toplama; PHP tarafında KP hesabı ve MOTD sunumu.
 ## Öne çıkanlar
 
 - **KP sunucuda hesaplanmıyor.** Eklenti ham sayaç gönderir; formül
-  `sunucu/sicil-ortak.php → kazanilanPuan()`. Rütbe şişirme kapalı,
+  `sunucu/kaesra-ortak.php → kazanilanPuan()`. Rütbe şişirme kapalı,
   formül değişimi `.amxx` dağıtımı gerektirmiyor, formül düzelince tüm
   sıralama geriye dönük yeniden hesaplanıyor.
 - **Tema sistemi.** Rütbe/silah adları ve görseller tek klasörde
@@ -68,14 +68,14 @@ AmxxEasyHttp ile toplama; PHP tarafında KP hesabı ve MOTD sunumu.
   görselsiz, telifsiz.
 - **Tek betik kurulum.** `kurulum/kurulum.ps1` yedi paketi resmî
   kaynaklardan indirir (`kurulum/surumler.ini`), ReHLDS'ten yalnız
-  `swds.dll` kopyalar, `liblist.gam`'ı çevirir, `sicil.sma`'yı derler.
+  `swds.dll` kopyalar, `liblist.gam`'ı çevirir, `kaesra.sma`'yı derler.
 - **17 sınamalı test paketi.** `test/api-sina.sh` mutlu yol kadar hata
   dallarını da sınar (401/400/409/422 + idempotency).
 
 ## Bu sürümle değişenler
 
 - Satış/lisans katmanı kaldırıldı. Yerine kurulum-başına **paylaşılan
-  anahtar** (`X-Sicil-Anahtar`) + nonce ve 300 sn zaman penceresi.
+  anahtar** (`X-Kaesra-Anahtar`) + nonce ve 300 sn zaman penceresi.
   Kimlik doğrulaması artık gövde doğrulamasından **önce** çalışıyor.
 - Valorant/Riot Games varlıkları kaldırıldı (telif). Eski ekran
   görüntüleri de bu yüzden yayınlanmadı.

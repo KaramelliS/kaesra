@@ -18,7 +18,7 @@ declare(strict_types=1);
  * sorguya geçince yalnız bu dosyanın gövdesi değişecek, sözleşme aynı kalacak.
  */
 
-require __DIR__ . '/sicil-ortak.php';
+require __DIR__ . '/kaesra-ortak.php';
 
 const AZAMI_KIMLIK = 32;
 

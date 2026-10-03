@@ -1,7 +1,7 @@
 # Kurulum
 
 İki parça var: **web servisi** (PHP) ve **oyun sunucusu** (HLDS + AMX Mod X).
-İkisi de aynı makinede olabilir; `sicil_api` varsayılanı zaten
+İkisi de aynı makinede olabilir; `kaesra_api` varsayılanı zaten
 `http://127.0.0.1:8130`.
 
 Sıra önemli değil, ama **doğrulama** için ikisi de çalışıyor olmalı.
@@ -46,21 +46,21 @@ PHP'nin kendi sunucusu tek iş parçacıklıdır; gerçek sunucuda
 
 ```apache
 # Apache
-DocumentRoot /var/www/sicil/sunucu
-<Directory /var/www/sicil/sunucu>
+DocumentRoot /var/www/kaesra/sunucu
+<Directory /var/www/kaesra/sunucu>
     Options -Indexes
     Require all granted
 </Directory>
 
 # veri/ klasörüne dışarıdan erişim ENGELLENMELİ — içinde anahtar.txt var.
-<Directory /var/www/sicil/sunucu/veri>
+<Directory /var/www/kaesra/sunucu/veri>
     Require all denied
 </Directory>
 ```
 
 ```nginx
 # nginx
-root /var/www/sicil/sunucu;
+root /var/www/kaesra/sunucu;
 index index.php;
 location ~ ^/veri/ { deny all; }
 location ~ \.php$ {
@@ -99,9 +99,9 @@ Betik şunları yapar:
 2. ReHLDS'ten **yalnız `swds.dll`** kopyalar → `valve/`
 3. ReGameDLL'den `mp.dll` / `cs.dll` → `cstrike/dlls/`
 4. Metamod-R → `cstrike/addons/metamod/` ve `liblist.gam` içindeki
-   `gamedll` satırını çevirir (yedek alır: `liblist.gam.sicil-yedek`)
+   `gamedll` satırını çevirir (yedek alır: `liblist.gam.kaesra-yedek`)
 5. AMX Mod X base + cstrike, ReAPI, AmxxEasyHttp → `valve/addons/`
-6. `sicil.sma`'yı derler, `sicil.cfg`'yi koyar, `plugins.ini` /
+6. `kaesra.sma`'yı derler, `kaesra.cfg`'yi koyar, `plugins.ini` /
    `modules.ini` / `server.cfg` satırlarını ekler
 
 `ExecutionPolicy` engeline takılırsanız:
@@ -138,11 +138,11 @@ unzip -o AmxxEasyHttp-*-linux-i386.zip -d .
 # liblist.gam
 sed -i 's|^gamedll_linux.*|gamedll_linux "addons/metamod/metamod_i386.so"|' cstrike/liblist.gam
 
-# Sicil
-cp ../oyun/sicil.sma  cstrike/addons/amxmodx/scripting/
-cp ../oyun/sicil.cfg  cstrike/addons/amxmodx/configs/
-cd cstrike/addons/amxmodx/scripting && ./amxxpc sicil.sma -o../plugins/sicil.amxx
-echo sicil.amxx >> ../configs/plugins.ini
+# Kaesra
+cp ../oyun/kaesra.sma  cstrike/addons/amxmodx/scripting/
+cp ../oyun/kaesra.cfg  cstrike/addons/amxmodx/configs/
+cd cstrike/addons/amxmodx/scripting && ./amxxpc kaesra.sma -o../plugins/kaesra.amxx
+echo kaesra.amxx >> ../configs/plugins.ini
 ```
 
 ---
@@ -152,19 +152,19 @@ echo sicil.amxx >> ../configs/plugins.ini
 `php anahtar-uret.php` çıktısını şuraya da yazın:
 
 ```
-cstrike/addons/amxmodx/configs/sicil.cfg
-  sicil_anahtar "<64 haneli değer>"
+cstrike/addons/amxmodx/configs/kaesra.cfg
+  kaesra_anahtar "<64 haneli değer>"
 ```
 
 Sonra haritayı yenileyin (`changelevel de_dust2`) ve konsolda:
 
 ```
-sicil_durum
+kaesra_durum
 ```
 
 `paylasilan anahtar: ayarli` görmelisiniz.
 
-> Anahtarı yenilemek: `php anahtar-uret.php --zorla` — sonra `sicil.cfg`'yi
+> Anahtarı yenilemek: `php anahtar-uret.php --zorla` — sonra `kaesra.cfg`'yi
 > de güncellemeyi unutmayın, yoksa API 401 döner.
 
 ---
@@ -240,7 +240,7 @@ pid'ini ve kendi dll'ini yazıyor).
 
 ```bash
 cat sunucu/veri/anahtar.txt
-grep sicil_anahtar cstrike/addons/amxmodx/configs/sicil.cfg
+grep kaesra_anahtar cstrike/addons/amxmodx/configs/kaesra.cfg
 ```
 
 İkisi **birebir** aynı olmalı. Baştaki/sondaki boşluk en sık sebep —
@@ -252,7 +252,7 @@ grep sicil_anahtar cstrike/addons/amxmodx/configs/sicil.cfg
 
 ### 400 `Zaman damgasi pencere disinda`
 
-Oyun sunucusunun saati 300 saniyeden fazla kaymış. `sicil_anahtar` doğru
+Oyun sunucusunun saati 300 saniyeden fazla kaymış. `kaesra_anahtar` doğru
 bile olsa istek reddedilir. NTP'yi düzeltin.
 
 ### 422 `Alanlar gecersiz` — `bilinmeyen_silah`
@@ -260,18 +260,18 @@ bile olsa istek reddedilir. NTP'yi düzeltin.
 Eklentinin gönderdiği silah adı temanın `silahEsleme` tablosunda yok.
 Bomba/el bombası/duman öldürmeleri **bilerek** listede değil ve eklenti
 bunları süzüyor; süzgeç ile tema ayrışırsa bütün parti düşer. Tema
-değiştirdiyseniz `oyun/sicil.sma` içindeki `BILINEN_SILAHLAR` listesini de
+değiştirdiyseniz `oyun/kaesra.sma` içindeki `BILINEN_SILAHLAR` listesini de
 güncelleyin.
 
 ### Veri gidiyor ama MOTD boş
 
-`sicil_api` yanlış ya da MOTD penceresi erişemiyor. MOTD **istemcinin**
+`kaesra_api` yanlış ya da MOTD penceresi erişemiyor. MOTD **istemcinin**
 açtığı bir sayfadır: `127.0.0.1` yalnız sunucu ile istemci aynı makinedeyken
 çalışır. Gerçek oyuncular için dışarıdan erişilebilir bir adres yazın.
 
 ### Sohbet Türkçe karakterleri bozuk
 
-`sicil_sohbet_kodlama` yanlış. Üç kip var:
+`kaesra_sohbet_kodlama` yanlış. Üç kip var:
 
 | Değer | Ne zaman |
 |---|---|
@@ -279,7 +279,7 @@ açtığı bir sayfadır: `127.0.0.1` yalnız sunucu ile istemci aynı makinedey
 | `1` CP1254 | eski/vanilla istemci — Türkçe tek bayt çizilir |
 | `2` ASCII | Türkçe karakterleri tamamen atar, en güvenli |
 
-`sicil_durum` hangi kipin etkin olduğunu söylüyor.
+`kaesra_durum` hangi kipin etkin olduğunu söylüyor.
 
 ### ReAPI yüklenmiyor
 
