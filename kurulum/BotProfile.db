@@ -1,0 +1,99 @@
+Default
+	Skill = 50
+	Aggression = 50
+	ReactionTime = 0.3
+	AttackDelay = 0
+	Teamwork = 75
+	WeaponPreference = none
+	Cost = 0
+	Difficulty = NORMAL
+	VoicePitch = 100
+End
+
+Template Tufek
+	WeaponPreference = m4a1
+	WeaponPreference = ak47
+	WeaponPreference = famas
+	WeaponPreference = galil
+End
+
+Template Keskin
+	WeaponPreference = awp
+	WeaponPreference = scout
+	WeaponPreference = m4a1
+End
+
+Template Hafif
+	WeaponPreference = mp5
+	WeaponPreference = p90
+	WeaponPreference = deagle
+End
+
+Template Pompali
+	WeaponPreference = xm1014
+	WeaponPreference = m3
+	WeaponPreference = mp5
+End
+
+Template Sahada
+	Aggression = 70
+	ReactionTime = 0.25
+	Difficulty = HARD
+	VoicePitch = 95
+End
+
+Sahada+Hafif Tunahan
+	Skill = 25
+End
+
+Sahada+Hafif Bilalcan
+	Skill = 32
+End
+
+Sahada+Pompali Kadirhan
+	Skill = 28
+End
+
+Sahada+Tufek Zeyrek
+	Skill = 45
+End
+
+Sahada+Tufek Gokhan
+	Skill = 55
+End
+
+Sahada+Keskin Tolgshn
+	Skill = 52
+End
+
+Sahada+Hafif Merve
+	Skill = 48
+End
+
+Sahada+Tufek Sahin
+	Skill = 68
+End
+
+Sahada+Tufek Bozkurt
+	Skill = 74
+End
+
+Sahada+Keskin Krtl
+	Skill = 71
+End
+
+Sahada+Pompali Eminalp
+	Skill = 66
+End
+
+Sahada+Tufek Efeliman
+	Skill = 100
+End
+
+Sahada+Keskin Sessiz
+	Skill = 95
+End
+
+Sahada+Hafif Toprak
+	Skill = 88
+End

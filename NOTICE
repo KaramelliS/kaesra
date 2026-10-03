@@ -1,0 +1,135 @@
+# SICIL — NOTICE / BİLDİRİM
+
+**Telif (c) 2026 Berkay. Tüm hakları saklıdır.**
+
+Bu eser **CC BY-NC-SA 4.0** (Atıf-GayriTicari-AynıLisanslaPaylaş 4.0) ile
+lisanslanmıştır. Lisansın tam metni bu depodaki [`LICENSE`](LICENSE)
+dosyasındadır ve hukuki olarak bağlayıcı olan odur; bu bildirim onu
+özetler ve netleştirir.
+
+Kısa özet: <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.tr>
+
+---
+
+## 1. Serbest olanlar
+
+Bunları **yapabilirsiniz**, izin istemenize gerek yok:
+
+- Eklentiyi ve web servisini kendi CS 1.6 sunucunuzda çalıştırmak
+- Kaynak kodu okumak, değiştirmek, kendinize göre uyarlamak
+- Değiştirilmiş sürümü başkalarıyla paylaşmak
+- Kendi temanızı, rütbe sisteminizi, KP formülünüzü yazmak
+
+**Para kazanan bir sunucuda çalıştırmak da serbesttir.** Sunucunuz VIP,
+admin slotu, skin veya bağış satıyor olabilir; bu, eserin "ticari
+kullanımı" sayılmaz. Telif sahibi olarak bunu açıkça ve ayrıca izin
+veriyorum — bkz. aşağıdaki §4.
+
+## 2. Yasak olanlar
+
+- **Satmak.** Eklentiyi, `.amxx` dosyasını, kaynak kodu veya bunlardan
+  türetilmiş herhangi bir şeyi ücret karşılığı dağıtamazsınız. Ücretli bir
+  paketin, kurulum hizmetinin, "hazır sunucu paketi"nin veya aboneliğin
+  parçası olarak veremezsiniz.
+- **Kendi eseriniz gibi göstermek.** Telif bildirimini, bu NOTICE
+  dosyasını, `sicil.sma` başlığındaki atıf satırını veya kaynak
+  dosyalardaki yorumları silemezsiniz, kısaltamazsınız, gizleyemezsiniz.
+- **"Sicil" adını veya logosunu kullanmak.** Bkz. §5.
+- **Lisansı değiştirmek.** Türev eserler de CC BY-NC-SA 4.0 altında
+  yayınlanmak zorundadır (ShareAlike). Kapalı kaynak yapamazsınız.
+
+## 3. Atıf nasıl yapılır
+
+Dağıttığınız her kopyada şunu görünür bir yerde tutun:
+
+> Sicil — CS 1.6 rank ve istatistik sistemi
+> Telif (c) 2026 Berkay. CC BY-NC-SA 4.0.
+> Orijinal kaynak: <DEPO-ADRESI>
+
+Bu NOTICE dosyasını ve LICENSE dosyasını da olduğu gibi bırakın.
+Değiştirdiyseniz, **değiştirdiğinizi belirtin** (CC BY-NC-SA 4.0 §3(a)(1)(B)
+zaten bunu şart koşuyor): dosya başına bir satır yeterli.
+
+## 4. Ek izin — ticari sunucu işletimi
+
+CC BY-NC-SA 4.0'ın "NonCommercial" tanımı "ticari avantaja veya parasal
+karşılığa yönelik olmayan" faaliyeti kasteder ve bu, oyun sunucusu
+işletenler için gereksiz bir belirsizlik yaratıyor. Telif sahibi olarak bu
+belirsizliği kaldırıyorum:
+
+> **Bir oyun sunucusunda bu eseri çalıştırmak ve o sunucudan gelir elde
+> etmek, bu lisansın kapsamında SERBESTTİR ve ticari kullanım sayılmaz.**
+>
+> Yasak olan tek şey **eserin kendisinin alınıp satılmasıdır** (§2).
+
+Bu izin geri alınamaz şekilde bu sürüm ve türevleri için geçerlidir.
+
+## 5. Marka
+
+"**Sicil**" adı ve logosu bu lisans kapsamında **değildir**. CC BY-NC-SA 4.0
+zaten marka hakkı vermez (§2(a)(2), §7(b)); burada açıkça yineleniyor.
+
+Eseri dağıtırken veya çatallarken:
+
+- Kendi sürümünüze **farklı bir ad** verin.
+- "Sicil" adını yalnızca eserin kaynağını belirtmek için, atıf amacıyla
+  kullanın ("Sicil tabanlı" gibi) — kendi ürününüzün adı olarak değil.
+
+## 6. Üçüncü taraf bileşenler
+
+Bu depo aşağıdakileri **içermez**; kurulum betiği onları resmî
+kaynaklarından indirir. Kendi lisansları geçerlidir:
+
+| Bileşen | Lisans | Kaynak |
+|---|---|---|
+| AMX Mod X | GPL-3.0 | amxmodx.org |
+| ReHLDS | GPL-3.0 | github.com/rehlds/ReHLDS |
+| ReGameDLL_CS | GPL-3.0 | github.com/rehlds/ReGameDLL_CS |
+| ReAPI | GPL-3.0 | github.com/rehlds/ReAPI |
+| Metamod-R | GPL-2.0 | github.com/theAsmodai/metamod-r |
+| AmxxEasyHttp | GPL-3.0 | github.com/Next21Team/AmxxEasyHttp |
+| Barlow / Anton yazı tipleri | SIL Open Font License 1.1 | fonts.google.com |
+
+`font/` klasöründeki yazı tipleri OFL-1.1 ile yeniden dağıtılabilir ve bu
+depoya dahildir; lisans metinleri klasörün içindedir.
+
+Bu eklenti GPL'li başlık dosyalarına (ReAPI, AmxxEasyHttp) karşı derlenir.
+CC BY-NC-SA 4.0 GPL ile uyumlu değildir; bu nedenle **yalnız kendi
+yazdığınız kod** bu lisans altında, üçüncü taraf bileşenler kendi
+lisansları altında kalır. Kendi kodunuzun GPL olmasını tercih ederseniz
+telif sahibi olarak ayrıca izin veriyorum — bkz. §7.
+
+## 7. İkili lisanslama
+
+Bu eseri **ticari olarak dağıtmak** istiyorsanız (ücretli bir pakete
+koymak, kurulum hizmetiyle birlikte satmak, kapalı kaynak türev yapmak),
+telif sahibiyle ayrıca bir ticari lisans anlaşması yapmanız gerekir.
+
+İletişim: <İLETİŞİM-ADRESİ>
+
+## 8. Garanti yoktur
+
+Bu eser "olduğu gibi" dağıtılmaktadır. CC BY-NC-SA 4.0 §5 uyarınca telif
+sahibi hiçbir garanti vermez ve ortaya çıkacak zararlardan sorumlu
+tutulamaz. Oyuncu verisi tutuyorsunuz: yedekleme, KVKK/GDPR ve güvenlik
+sorumluluğu size aittir.
+
+---
+
+## English summary
+
+*Sicil* is a rank & statistics system for Counter-Strike 1.6, licensed under
+**CC BY-NC-SA 4.0**. Copyright (c) 2026 Berkay. All rights reserved.
+
+**You may** use, modify, and share it, including on a monetized game server
+— running a server that sells VIP or admin slots is explicitly permitted and
+is *not* considered commercial use of the work (see §4).
+
+**You may not** sell the work or any derivative of it, include it in a paid
+product, bundle, or subscription, remove attribution, pass it off as your
+own, or use the name/logo "Sicil" for your own product.
+
+Derivatives must stay under CC BY-NC-SA 4.0. A separate commercial license
+is available from the copyright holder (§7).
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.

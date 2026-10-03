@@ -1,0 +1,139 @@
+/*
+ * Sicil'in görsel dili. İki MOTD sayfası da bunu kullanıyor.
+ *
+ * ÖNEMLİ — bu dosya bilerek eski usul yazıldı.
+ *
+ * İlk sürümde CSS değişkeni (:root + var()) kullandım ve sayfa oyun içinde
+ * BEMBEYAZ çıktı: fontlar geldi, renkler gelmedi. İkisi de aynı dosyadaydı,
+ * yani dosya yükleniyordu — sorun var() idi. MOTD penceresinin motoru
+ * IE11 sınıfı: flexbox, gradient, rgba, transform, box-shadow ve @font-face
+ * çalışıyor ama custom property yok.
+ *
+ * Bu yüzden burada şunlar YASAK:
+ *   var()  ·  clip-path  ·  mask-image  ·  object-fit  ·  CSS grid  ·  gap
+ * Açılı pah clip-path yerine 45 derece döndürülmüş bir kare ile kesiliyor,
+ * boşluklar gap yerine margin ile veriliyor.
+ *
+ * Üç yazı tipi, üç ayrı iş: Anton yalnız display, Barlow Condensed yalnız
+ * etiket, Barlow gövde. Tek fontla kurulmuş arayüz "sade" görünmesinin asıl
+ * sebebiydi — ilk denemede Impact vardı ve o bir yer tutucuydu.
+ *
+ * Tek vurgu rengi #FF4655. Kademe renkleri süs değil veri: rozetin rengiyle
+ * aynı, oyuncu rengi görüp rütbeyi okumadan tanıyor.
+ */
+
+@font-face { font-family:'Sicil Display'; src:url('font/Anton-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Sicil Dar'; src:url('font/BarlowCondensed-SemiBold.ttf') format('truetype'); font-weight:600; }
+@font-face { font-family:'Sicil Dar'; src:url('font/BarlowCondensed-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Sicil UI'; src:url('font/Barlow-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Sicil UI'; src:url('font/Barlow-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family:'Sicil UI'; src:url('font/Barlow-SemiBold.ttf') format('truetype'); font-weight:600; }
+
+* { box-sizing:border-box; }
+
+html, body { background:#0B1219; }
+
+body {
+  margin:0; color:#ECE8E1;
+  font-family:'Sicil UI','Segoe UI',Tahoma,sans-serif; font-size:15px; line-height:1.45;
+}
+
+.etiket {
+  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:#5E7080;
+}
+
+/* Üç tırnak motifi; başlık şeridinde bölüm ayracı olarak kullanılıyor. */
+.tik { display:inline-block; margin:0 9px; }
+.tik i { display:inline-block; width:3px; height:11px; background:#FF4655; margin-right:3px;
+         -ms-transform:skewX(-14deg); transform:skewX(-14deg); vertical-align:middle; }
+.tik i.b { background:#8E3742; }
+.tik i.c { background:#5A2A32; }
+
+/* ---------------- Tepe şeridi ----------------
+   Ölçüler MOTD penceresine göre: GoldSrc paneli ekranın ~%70 genişliği ve
+   ~%90 yüksekliği, iç HTML alanı 1280x720'de kabaca 860x550. Sayfanın
+   TAMAMI oraya sığmalı, çünkü pencere kaydırılamıyor — HTML denetimi fare
+   tekerini iletmiyor. Bu yüzden tepe şeridi 168 pikselden 92'ye indi;
+   62 puntoluk marka orada tek başına ekranın altıda birini yiyordu. */
+.tepe {
+  position:relative; overflow:hidden; padding:9px 22px 8px;
+  background:#101A24 url('arkaplan.jpg') left center no-repeat;
+  background-size:cover;
+  border-bottom:2px solid #FF4655;
+}
+/* Perde eskiden solda %10 opaktı ve arkaplan fotoğrafı olduğu gibi
+   görünüyordu: markanın arkasında bulanık bir gürültü, 34 puntoluk yazı
+   onun içinde kayboluyordu. Fotoğraf artık bir doku, bir görsel değil. */
+.tepe .perde {
+  position:absolute; left:0; top:0; right:0; bottom:0;
+  background:linear-gradient(94deg, rgba(11,18,25,.62) 0%, rgba(11,18,25,.90) 44%, #0B1219 88%);
+}
+.tepe .ic { position:relative; display:flex; align-items:flex-end; justify-content:space-between; }
+
+.marka {
+  margin:0; font-family:'Sicil Display',sans-serif; font-weight:400;
+  font-size:40px; line-height:.86; letter-spacing:.06em; text-transform:uppercase; color:#ECE8E1;
+}
+.marka b { color:#FF4655; font-weight:400; }
+.marka + .etiket { display:block; margin-top:5px; font-size:11px; letter-spacing:.18em; }
+
+.tepe .sag { text-align:right; }
+.tepe .sag .n { font-family:'Sicil Display',sans-serif; font-size:22px; line-height:1; color:#ECE8E1; }
+
+/* Açılı pah: clip-path yok, köşeye 45 derece döndürülmüş bir kare oturtuluyor.
+   Karenin rengi sayfa zemini olduğu için köşe kesilmiş görünüyor. */
+.pah { position:relative; }
+.pah .kose {
+  position:absolute; right:-15px; bottom:-15px; width:30px; height:30px;
+  background:#0B1219; -ms-transform:rotate(45deg); transform:rotate(45deg);
+}
+
+/* ---------------- Tablo ---------------- */
+table { width:100%; border-collapse:collapse; }
+thead th {
+  font-family:'Sicil Dar',sans-serif; font-weight:600;
+  font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:#5E7080;
+  text-align:left; padding:7px 9px 6px; border-bottom:1px solid rgba(236,232,225,.10);
+}
+thead th.sag, tbody td.sag { text-align:right; }
+tbody td { padding:2px 9px; border-bottom:1px solid rgba(236,232,225,.05); vertical-align:middle; }
+tbody tr:hover td { background:rgba(236,232,225,.045); }
+
+.sira { width:30px; font-family:'Sicil Display',sans-serif; font-size:16px; color:#3F5061; }
+.kademeAd { font-family:'Sicil Dar',sans-serif; font-weight:600; font-size:14px; letter-spacing:.10em; text-transform:uppercase; }
+.kucuk { color:#93A2AE; }
+.oyuncuAd { font-weight:500; color:#ECE8E1; }
+
+/*
+ * KP hücresi — sayfanın imza öğesi.
+ *
+ * Düz bir sayı sütunu sıralamayı okutuyor ama FARKI okutmuyor: 5.560 ile
+ * 3.041 arasındaki uçurumu görmek için iki sayıyı zihinde bölmek gerekiyor.
+ * Sayının altındaki çubuk o işi yapıyor — genişlik birinciye oranlı, renk
+ * oyuncunun kendi kademesinin rengi. Böylece tablo bir sütun grafiğine
+ * dönüşüyor ve kademe rengi süs olmaktan çıkıp veri taşıyor.
+ *
+ * Çubuk sayının ALTINDA, üstünde değil: arkasına yerleştirmek sayıyı
+ * okunmaz yapıyordu ve satır yüksekliğini büyütmeden ikisini üst üste
+ * koymanın IE11'de temiz bir yolu yok.
+ */
+.kpHucre {
+  font-family:'Sicil Display',sans-serif; font-size:18px; line-height:1;
+  color:#ECE8E1; padding-top:4px !important; padding-bottom:3px !important;
+}
+.kpHucre .cubuk {
+  display:block; height:2px; margin-top:3px; margin-left:auto;
+  background:rgba(236,232,225,.09);
+}
+.kpHucre .cubuk i { display:block; height:2px; }
+
+/* Satırın solundaki kademe rengi tırnağı. */
+.tirnak { width:4px; padding:0 !important; }
+.tirnak i { display:block; width:4px; height:26px; }
+
+.silahHucre { color:#93A2AE; white-space:nowrap; }
+.silahHucre img { width:46px; height:16px; vertical-align:middle; margin-right:7px; }
+
+.dip { display:flex; justify-content:space-between; padding:5px 22px 5px; border-top:1px solid rgba(236,232,225,.10); }
+.dip .etiket { font-size:11px; letter-spacing:.16em; }

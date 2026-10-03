@@ -1,0 +1,12 @@
+# Satır sonları: kaynak LF, Windows betikleri CRLF, ikililer dokunulmaz.
+# Neden: PHP ve Pawn dosyaları CRLF olunca amxxpc ve bazı PHP kurulumları
+# uyarı basıyor; .ps1 ise LF olunca PowerShell 5.1 bazen bozuyor.
+* text=auto eol=lf
+*.ps1   text eol=crlf
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.png   binary
+*.jpg   binary
+*.ttf   binary
+*.amxx  binary
+*.db    binary

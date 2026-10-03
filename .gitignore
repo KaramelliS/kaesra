@@ -1,0 +1,42 @@
+# ---- Derleme ara ürünleri ----
+# sicil.amxx BİLEREK izleniyor: kurulumda AMXX derleyicisi olmayanlar
+# hazır ikiliyi kullanabilsin diye. Kendi derlemenizi üretirseniz
+# oyun/sicil.amxx değişecek — commit etmeden önce farkına bakın.
+*.exe.log
+*.lst
+*.asm
+
+# ---- Çalışma zamanı verisi ----
+# depo.json oyuncu istatistikleri (SteamID + nick içerir), anahtar.txt ise
+# paylaşılan sırdır. İkisi de repoya GİRMEMELİ. Klasörün kendisi
+# veri/.gitignore ile korunuyor.
+sunucu/veri/*
+!sunucu/veri/.gitignore
+
+# ---- Kurulum önbelleği ----
+# kurulum.ps1 indirdiği ~12 MB paketi burada tutuyor. Yeniden indirilebilir,
+# repoda durmasının anlamı yok.
+kurulum/onbellek/
+
+# ---- Yerel geliştirme ----
+*.log
+*.yedek
+*.orig
+*.rej
+.phpunit.result.cache
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ---- Yerel test sunucusu ----
+# 900 MB'a yakın; SteamCMD + kurulum betiğiyle yeniden kurulur.
+hlds/
+test-sunucu/
+
+# ---- Editör ----
+.vscode/
+.idea/
+*.swp
+
+# rcon sifresi — asla repoya girmez
+test/.rcon-sifre
