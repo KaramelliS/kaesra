@@ -2,7 +2,7 @@
 
 İki biçim var: **forum/Discord** gönderisi (samimi, kısa) ve **GitHub
 release** notu (yapısal). İkisini de olduğu gibi kopyalayabilirsiniz.
-Köşeli parantezleri doldurmayı unutmayın: `[DEPO-ADRESI]`, `[İLETİŞİM]`.
+Köşeli parantezleri doldurmayı unutmayın: `https://github.com/KaramelliS/kaesra`, `https://github.com/KaramelliS`.
 
 ---
 
@@ -42,8 +42,8 @@ Köşeli parantezleri doldurmayı unutmayın: `[DEPO-ADRESI]`, `[İLETİŞİM]`.
 > üstünde tıkanır), sıralama indekssiz, MOTD penceresi kaydırılamadığı için
 > sayfalar sabit ölçüye sığdırıldı. Hepsi README'de yazıyor.
 >
-> Repo: [DEPO-ADRESI]
-> Soru/öneri: [İLETİŞİM]
+> Repo: https://github.com/KaramelliS/kaesra
+> Soru/öneri: https://github.com/KaramelliS
 >
 > Kullanan olursa sıralama sayfasının ekran görüntüsünü görmek isterim. 🙏
 
@@ -105,7 +105,7 @@ kaydırılamayan MOTD (sayfalar 860×550'ye sığdırıldı). Hepsi README'de.
 
 ## Paylaşmadan önce kontrol listesi
 
-- [ ] `[DEPO-ADRESI]` ve `[İLETİŞİM]` dolduruldu
+- [ ] `https://github.com/KaramelliS/kaesra` ve `https://github.com/KaramelliS` dolduruldu
 - [ ] Repo **public** yapıldı ve ilk push'ta `sunucu/veri/` boş geldi
       (gitignore'da; ama push sonrası `git ls-files | grep veri` ile
       doğrulayın)

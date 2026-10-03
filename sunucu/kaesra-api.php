@@ -28,7 +28,7 @@ const AZAMI_GOVDE = 262144;   // 256 KiB
  * varsa buraya onun adresini yazın; yoksa bu haliyle de geçerli — `type`
  * alanının çözülebilir olması şart değil, tanımlayıcı olması yeterli.
  */
-const HATA_TIP_KOK = 'https://example.invalid/kaesra/hata/';
+const HATA_TIP_KOK = 'https://github.com/KaramelliS/kaesra/blob/main/KURULUM.md#sorun-giderme';
 
 /**
  * RFC 9457 hata gövdesi ve çıkış.
