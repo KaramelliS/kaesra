@@ -1,46 +1,42 @@
 # Ekran görüntüleri
 
-Bu depoda **hazır ekran görüntüsü yok** ve bu bilinçli.
+Bu klasördeki görseller **klasik temayla** ve `tohumVeri => '1'` (sahte veri)
+açıkken, MOTD penceresinin gerçek ölçüsü olan **860×550**'de headless
+Chrome ile üretildi:
 
-Eski sürümün görüntüleri Valorant temalıydı: Riot Games'in rütbe rozetleri,
-ajan portreleri ve silah ikonları görünüyordu; başlık şeridinde ayrıca
-eski bir sunucunun **gerçek IP adresi** ve clan adı vardı. İkisi de
-yayınlanamaz — biri telif, diğeri veri.
-
-Görüntüleri kendiniz yakalamanız gerekiyor. Eklenti bunun için bir rcon
-komutuyla geliyor:
-
-```
-kaesra_goster <ad parçası> <komut>
+```bash
+chrome --headless=new --window-size=860,550 --hide-scrollbars \
+       --screenshot=docs/motd-siralama.png \
+       "http://127.0.0.1:8130/siralama-motd.php"
 ```
 
-Örneğin:
+| Dosya | Sayfa |
+|---|---|
+| `motd-siralama.png` | `/top` — sıralama, arama, sayfalama, sezon birincisi |
+| `motd-profil.png` | `/rank` — profil, rütbe, silah/harita kırılımı |
+| `motd-rutbeler.png` | `/rutbeler` — 25 kademeli merdiven |
+| `motd-silahlar.png` | `/silahlar` — silah başına kill |
+| `motd-haritalar.png` | `/haritalar` — harita başına süre |
+| `motd-karsilastir.png` | `/karsilastir` — iki oyuncu yan yana |
+
+Görsellerde **hiçbir üçüncü taraf telifli varlık yok**: klasik tema
+görselsizdir, rütbe ve silah adları özgündür. Eski Valorant temalı
+görüntüler Riot Games sanatı ve gerçek bir sunucu IP'si içerdiği için
+**yayınlanmadı ve silindi**.
+
+## Oyun içinde görmek
+
+MOTD penceresi bu HTML'i birebir gösterir. Oyun içinde doğrulamak için
+bir istemciyle bağlanıp `/top` yazın; ya da sunucudan bir oyuncuya
+açtırın:
 
 ```
-kaesra_goster kaptan /top
-kaesra_goster kaptan /rank
-kaesra_goster kaptan /rutbeler
-kaesra_goster kaptan /silahlar
-kaesra_goster kaptan /haritalar
-kaesra_goster kaptan /karsilastir sessiz_adim
+kaesra_goster <ad parçası> /top
 ```
 
-Komut, adı eşleşen oyuncunun ekranında MOTD penceresini açıyor — oyuncunun
-kendisi yazmış gibi. Tanıtım çekimi sırasında fareye dokunmadan sayfa
-açmanın tek yolu bu.
+## Neden 860×550
 
-## Yakalama sırası
-
-1. Sunucuyu ve web servisini kaldırın, bir tur oynatın (depo dolsun).
-2. `kaesra_goster` ile sayfayı açın.
-3. Pencereyi yakalayın (OBS, `Win+Shift+S`, veya `sunucu/pencere-cek.ps1`
-   benzeri bir betik).
-4. **Yayınlamadan önce başlık şeridini kontrol edin.** `yapilandirma.php`
-   içindeki `sunucuAdres` doluysa IP'niz görüntüde görünüyor. Boş bırakın.
-
-## Ölçü
-
-MOTD penceresi 1280×720'de kabaca **860×550** iç alan veriyor. Sayfalar bu
-ölçüye sığdırıldı; kaydırma yok (GoldSrc'in HTML denetimi fare tekerini
-iletmiyor). Yakaladığınız görüntü pencereyi aşıyorsa bir şey bozulmuş
-demektir — `sunucu/olcu-motd.php` gerçek ölçüyü öğrenmek için duruyor.
+GoldSrc'in MOTD penceresi 1280×720'de kabaca bu iç alanı veriyor ve
+**kaydırılamıyor** (HTML denetimi fare tekerini iletmiyor). Sayfalar bu
+ölçüye sığdırıldı; gezinme şeritleri listenin üstünde. Ürettiğiniz görsel
+pencereyi aşıyorsa bir şey bozulmuş demektir.

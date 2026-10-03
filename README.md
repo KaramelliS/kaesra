@@ -27,10 +27,10 @@ Oyun içi komutlar GoldSrc'in MOTD penceresinde HTML sayfa açıyor. Altı sayfa
 Ayrıca `bind F5 rank` gibi konsol bağlamaları çalışıyor — tur ortasında
 sohbeti açmak gerekmeyebilsin diye.
 
-> Ekran görüntüleri: Valorant temalı eski sürümden kalan görüntüler Riot
-> Games'in sanatını ve eski bir sunucunun gerçek IP'sini içerdiği için
-> **yayınlanmadı**. Jenerik temayla yakalanmış görüntüler
-> `docs/EKRAN-GORUNTULERI.md` içinde — nasıl alındığı da orada yazıyor.
+> Ekran görüntüleri (klasik tema, 860×550 MOTD ölçüsü):
+> `docs/motd-siralama.png`, `docs/motd-profil.png`, `docs/motd-rutbeler.png`,
+> `docs/motd-silahlar.png`, `docs/motd-haritalar.png`, `docs/motd-karsilastir.png`.
+> Nasıl üretildikleri: `docs/EKRAN-GORUNTULERI.md`.
 
 ---
 

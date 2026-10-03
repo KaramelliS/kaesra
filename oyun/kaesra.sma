@@ -937,6 +937,18 @@ bool:PartiyiKur()
     for (new i = 0; i < sayi; i++) {
         new id = oyuncular[i]
 
+        /*
+         * Botlar oyun içi sayaçlarda tutulabilir (kaesra_botlari_say) ama
+         * WEB'E HİÇ GİTMEZ. SteamID'leri düz "BOT" olduğu için API kimlik
+         * doğrulamasında partinin TAMAMI 422 ile düşerdi — yani sırf test
+         * için açılan bir cvar, gerçek oyuncuların o turdaki verisini
+         * yakardı. cvar'ın belgesi "verileri web'e gönderilemez" diyor;
+         * bu satır o sözü koda çeviriyor.
+         */
+        if (is_user_bot(id)) {
+            continue
+        }
+
         if (!SenkronVerisiVar(id)) {
             continue
         }
