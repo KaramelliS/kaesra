@@ -40,3 +40,6 @@ test-sunucu/
 
 # rcon sifresi — asla repoya girmez
 test/.rcon-sifre
+
+# CANLI KIMLIK BILGISI — asla repoya girmez
+.paylasim/
